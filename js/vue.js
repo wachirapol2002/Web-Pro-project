@@ -11,15 +11,16 @@ var app = new Vue({
         firstname: "",
         lastname: "",
         tel: "",
-        admin: 
+        accounts:[
             {
                 username: "admin",
                 password: "password",
                 permission: "5",
-                firstname: null,
-                lastname: null,
-                tel: null
+                firstname: "",
+                lastname: "",
+                tel: ""
             },
+        ],
         center:{
             'd-flex': true,
             'justify-content-center':true,
@@ -94,14 +95,15 @@ var app = new Vue({
         },
     },
     computed:{
-        accounts(){
-            return JSON.parse(localStorage.getItem('accounts'));
-        },
+        // accounts(){
+        //     return JSON.parse(localStorage.getItem('accounts'));
+        // },
     },
     watch:{
         accounts(newAccount){
             const myJSON = JSON.stringify(newAccount);
             window.localStorage.setItem('accounts', myJSON);
+            
         },
     }
 })
