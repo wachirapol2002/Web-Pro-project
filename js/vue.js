@@ -1,4 +1,4 @@
-var app = new Vue({
+    var app = new Vue({
     el: '#app',
     data: {
         shopName: "NoneQ Stores",
@@ -11,6 +11,11 @@ var app = new Vue({
         firstname: "",
         lastname: "",
         tel: "",
+        center:{
+            'd-flex': true,
+            'justify-content-center':true,
+            'align-items-center':true
+        },
         accounts:[
             {
                 username: "admin",
@@ -21,24 +26,27 @@ var app = new Vue({
                 tel: ""
             },
         ],
-        center:{
-            'd-flex': true,
-            'justify-content-center':true,
-            'align-items-center':true
-        }
-        
     },
     methods: {
+        outStore(){
+            window.location.href = "./index.html";
+        },
         enterStore(){
             if(this.open == true){
-                window.location.href = "./in_store.php";
-                this.accounts = JSON.parse(localStorage.getItem('accounts'));
+                window.location.href = "./instore.html";
             }
             else{
                 alert("ขออภัยในขณะนี้ ร้านปิดให้บริการอยู่")
             }
         },
         goLogin(){
+            const myJSON = JSON.stringify(this.accounts);
+            window.localStorage.setItem('accounts', myJSON);
+            window.location.href = "./login.html";
+        },
+        logout(){
+            window.localStorage.setItem('username', "");
+            window.localStorage.setItem('loginstatus', false);
             window.location.href = "./login.html";
         },
         loginCheck(){
@@ -51,12 +59,13 @@ var app = new Vue({
                 alert("รหัสถูก")
             }
             else{
-                alert("รหัสผิด")
+                alert("รหัสผิดดดด")
             }
         },
         goRegister(){
+            const myJSON = JSON.stringify(this.accounts);
+            window.localStorage.setItem('accounts', myJSON);
             window.location.href = "./register.html";
-            this.accounts = JSON.parse(localStorage.getItem('accounts'));
         },
         registerCheck(){
             this.accounts.forEach((account) =>{
@@ -87,23 +96,32 @@ var app = new Vue({
                     tel: this.tel,
                 })
                 alert("สมัครบัญชีสำเร็จ")
+                window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+                window.location.href = "./login.html";
             }
 
         },
         showpassword(){
             showPassword = !showPassword
         },
+        goInStore(){
+            window.location.href = "./instore.html";
+        },
     },
     computed:{
-        // accounts(){
-        //     return JSON.parse(localStorage.getItem('accounts'));
-        // },
+        loginacct(){
+            return (localStorage.getItem('username'));
+        },
+        loginstatus(){
+            return JSON.parse(localStorage.getItem('loginstatus'));
+        },
     },
     watch:{
-        accounts(newAccount){
-            const myJSON = JSON.stringify(newAccount);
-            window.localStorage.setItem('accounts', myJSON);
-            
+        accounts:{
+            handler: function(val, oldVal) {
+                window.localStorage.setItem('accounts', JSON.stringify(val));
+            },
+            deep: true
         },
-    }
+    },
 })
