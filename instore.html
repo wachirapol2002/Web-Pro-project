@@ -199,10 +199,10 @@
             }
             else{
                 if(this.tables[tableNum-1].user == this.loginacct){   //โต๊ะมีคนใช้
-                    window.location.href = "./booking.html?Table="+tableNum+"&User="+this.loginacct;
+                    window.location.href = "./order.html?Table="+tableNum+"&User="+this.loginacct;
                 }
                 else{
-                    alert("ขออภัยคณะนี้โต๊ะไม่พร้อมใช้งาน")
+                    alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
                 }
             }
         }

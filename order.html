@@ -117,9 +117,12 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
-    var app = new Vue({
-    el: '#app',
-    data: {
+        const urlParams = new URLSearchParams(window.location.search);
+        var table = urlParams.get('Table');
+        var user = urlParams.get('User');
+        var app = new Vue({
+        el: '#app',
+        data: {
         shopName: "NoneQ Store",
         open: true,
         login: false,
@@ -136,200 +139,205 @@
             'align-items-center':true
         },
         menu: [
-                    {
-                        id: 0,
-                        title: "สันคอหมู",
-                        color: ['green', 'blue', 'red'],
-                        image: 'image/SlicedPorkNeck.jpg',
-                        quantity: 0
-                    },
-                    {
-                        id: 1,
-                        title: "เบคอน",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/Bacon.jpg'
-                    },
-                    {
-                        id: 2,
-                        title: "หมูสามชั้น",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/Streakypork.jpg'
-                    },
-                    {
-                        id: 3,
-                        title: "เนื้อสันคอ",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/sirloin.jpg'
-                    },
-                    {
-                        id: 4,
-                        title: "ผักกาดขาว",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/Chinese cabbage.jpg'
-                    },
-                    {
-                        id: 5,
-                        title: "ผักบุ้ง",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/Water Spinach.jpg'
-                    },
-                    {
-                        id: 6,
-                        title: "เต้าหู้ไข่",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/Egg Tofu.png'
-                    },
-                    {
-                        id: 7,
-                        title: "ไข่ไก่",
-                        color: ['green', 'blue', 'red'],
-                        quantity: 0,
-                        image: 'image/egg.jpg'
-                    },
-                ],
-                order: [],
-    },
-    methods: {
-        outStore(){
-            window.location.href = "./index.html";
-        },
-        enterStore(){
-            if(this.open == true){
-                window.location.href = "./instore.html";
-            }
-            else{
-                alert("ขออภัยในขณะนี้ ร้านปิดให้บริการอยู่")
-            }
-        },
-        goLogin(){
-            const myJSON = JSON.stringify(this.accounts);
-            window.localStorage.setItem('accounts', myJSON);
-            window.location.href = "./login.html";
-        },
-        logout(){
-            window.localStorage.setItem('username', "");
-            window.localStorage.setItem('loginstatus', false);
-            window.location.href = "./login.html";
-        },
-        loginCheck(){
-            this.accounts.forEach((account) =>{
-                if(this.username == account.username && this.password == account.password){
-                    return this.login = true
-                }
-            })
-            if(this.login == true){
-                alert("รหัสถูก")
-            }
-            else{
-                alert("รหัสผิดดดด")
-            }
-        },
-        goRegister(){
-            const myJSON = JSON.stringify(this.accounts);
-            window.localStorage.setItem('accounts', myJSON);
-            window.location.href = "./register.html";
-        },
-        registerCheck(){
-            this.accounts.forEach((account) =>{
-                if(this.username == account.username){
-                    this.username = ""
-                    return alert("มีผู้ใช้งานนี้แล้ว")
-                }
-            })
-            if(this.firstname==""||this.lastname==""||this.tel==""||this.username==""||this.password==""||this.verifypassword==""){
-                alert("กรุณากรอกข้อมูลให้ครบ")
-            }
-            else if(this.tel.length < 10){
-                alert("กรุณาเบอร์โทรศัพท์ให้ถูกต้อง")
-            }
-            else if(this.password != this.verifypassword){
-                alert("รหัสผ่านไม่เหมือนกัน")
-            }
-            else if(this.password.length < 6){
-                alert("กรอกรหัสผ่าน 6-20 ตัวอักษร")
-            }
-            else{
-                this.accounts.push({
-                    username: this.username,
-                    password: this.password,
-                    permission: "1",
-                    firstname: this.firstname,
-                    lastname: this.lastname,
-                    tel: this.tel,
-                })
-                alert("สมัครบัญชีสำเร็จ")
-                window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
-                window.location.href = "./login.html";
-            }
-
-        },
-        showpassword(){
-            showPassword = !showPassword
-        },
-        goInStore(){
-            window.location.href = "./instore.html";
-        },
-
-        addToOrder(item) {
-                    if (item.quantity == 0) {
-                        this.order.push(item)
-                        item.quantity++
-                    }
-                    else {
-                        item.quantity++
-                    }
-                },
-        removeFromOrder(index) {
-            if(index.quantity > 1){
-                index.quantity--   
-            }
-            else if(index.quantity){
-                this.order.splice(index, 1)
-            }
-            
-                },
-
-        menuConfirm(){
-            if(this.order == ""){
-                alert("กรุณาสั่งรายการอาหาร")
-            }
-            else{
-                alert("รายการอาหารถูกสั่งเรียบร้อย")
-                window.location.href = "./order.html";
-            }
-        },
-    },
-    computed:{
-        loginacct(){
-            return (localStorage.getItem('username'));
-        },
-        loginstatus(){
-            return JSON.parse(localStorage.getItem('loginstatus'));
-        },
-        accounts(){
-            return JSON.parse(localStorage.getItem('accounts'));
-        },
-        tables(){
-            return JSON.parse(localStorage.getItem('tables'));
-        }
-    },
-    watch:{
-        accounts:{
-            handler: function(val, oldVal) {
-                window.localStorage.setItem('accounts', JSON.stringify(val));
+            {
+                id: 0,
+                title: "สันคอหมู",
+                color: ['green', 'blue', 'red'],
+                image: 'image/SlicedPorkNeck.jpg',
+                quantity: 0
             },
-            deep: true
-        },
+            {
+                id: 1,
+                title: "เบคอน",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/Bacon.jpg'
+            },
+            {
+                id: 2,
+                title: "หมูสามชั้น",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/Streakypork.jpg'
+            },
+            {
+                id: 3,
+                title: "เนื้อสันคอ",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/sirloin.jpg'
+            },
+            {
+                id: 4,
+                title: "ผักกาดขาว",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/Chinese cabbage.jpg'
+            },
+            {
+                id: 5,
+                title: "ผักบุ้ง",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/Water Spinach.jpg'
+            },
+            {
+                id: 6,
+                title: "เต้าหู้ไข่",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/Egg Tofu.png'
+            },
+            {
+                id: 7,
+                title: "ไข่ไก่",
+                color: ['green', 'blue', 'red'],
+                quantity: 0,
+                image: 'image/egg.jpg'
+            },
+        ],
+        order: [],
     },
-})
-    </script>
-<script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+        methods: {
+            outStore(){
+            window.location.href = "./index.html";
+            },
+            enterStore(){
+                if(this.open == true){
+                    window.location.href = "./in_store.php";
+                    this.accounts = JSON.parse(localStorage.getItem('accounts'));
+                }
+                else{
+                    alert("ขออภัยในขณะนี้ ร้านปิดให้บริการอยู่")
+                }
+            },
+            goLogin(){
+                window.location.href = "./login.html";
+            },
+            logout(){
+                window.localStorage.setItem('username', "");
+                window.localStorage.setItem('loginstatus', false);
+                window.location.href = "./login.html";
+            },
+            loginCheck(){
+                this.accounts.forEach((account) =>{
+                    if(this.username == account.username && this.password == account.password){
+                        return this.login = true
+                    }
+                })
+                if(this.login == true){
+                    alert("Login Success")
+                    window.localStorage.setItem('username', this.username);
+                    window.localStorage.setItem('loginstatus', true);  
+                    window.location.href="./instore.html";
+                }
+                else{
+                    alert("รหัสผิด")
+                }
+            },
+            goRegister(){
+                const myJSON = JSON.stringify(this.accounts);
+                window.localStorage.setItem('accounts', myJSON);
+                window.location.href = "./register.html";
+            },
+            registerCheck(){
+                this.accounts.forEach((account) =>{
+                    if(this.username == account.username){
+                        this.username = ""
+                        return alert("มีผู้ใช้งานนี้แล้ว")
+                    }
+                })
+                if(this.firstname==""||this.lastname==""||this.tel==""||this.username==""||this.password==""||this.verifypassword==""){
+                    alert("กรุณากรอกข้อมูลให้ครบ")
+                }
+                else if(this.tel.length < 10){
+                    alert("กรุณาเบอร์โทรศัพท์ให้ถูกต้อง")
+                }
+                else if(this.password != this.verifypassword){
+                    alert("รหัสผ่านไม่เหมือนกัน")
+                }
+                else if(this.password.length < 6){
+                    alert("กรอกรหัสผ่าน 6-20 ตัวอักษร")
+                }
+                else{
+                    this.accounts.push({
+                        username: this.username,
+                        password: this.password,
+                        permission: "1",
+                        firstname: this.firstname,
+                        lastname: this.lastname,
+                        tel: this.tel,
+                        checkIN: false,
+                    })
+                    alert("สมัครบัญชีสำเร็จ")
+                    window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
+                    window.location.href = "./login.html";
+                }
+            },
+            showpassword(){
+                showPassword = !showPassword
+            },
+            goInStore(){
+                window.location.href = "./instore.html";
+            },
+            goProfile(){
+            window.location.href = "./profile.html";
+            },
+
+            addToOrder(item) {
+                        if (item.quantity == 0) {
+                            this.order.push(item)
+                            item.quantity++
+                        }
+                        else {
+                            item.quantity++
+                        }
+            },
+            removeFromOrder(index) {
+                if(index.quantity > 1){
+                    index.quantity--   
+                }
+                else if(index.quantity){
+                    this.order.splice(index, 1)
+                }
+                
+            },
+
+            menuConfirm(){
+                if(this.order == ""){
+                    alert("กรุณาสั่งรายการอาหาร")
+                }
+                else{
+                    alert("รายการอาหารถูกสั่งเรียบร้อย")
+                    window.location.href = "./order.html";
+                }
+            },
+        },
+        computed:{
+            loginacct(){
+                return (localStorage.getItem('username'));
+            },
+            loginstatus(){
+                return JSON.parse(localStorage.getItem('loginstatus'));
+            },
+            accounts(){
+                return JSON.parse(localStorage.getItem('accounts'));
+            },
+            tables(){
+                return JSON.parse(localStorage.getItem('tables'));
+            }
+        },
+        watch:{
+            accounts:{
+                handler: function(val, oldVal) {
+                    window.localStorage.setItem('accounts', JSON.stringify(val));
+                },
+                deep: true
+            },
+        },
+    })
+        </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 
 </body>
 </html>
