@@ -4,44 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="css/store.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">  
     <title>NoneQ Stores</title>
 </head>
-<style>
-    .test{
-        height: 50px;
-        width: 50px;
-        background: red;
-    }
-    .grid{
-        display: grid;
-        grid-template-columns: auto auto auto auto auto;
-        gap: 10vh;
-        background-color: gray;
-        padding: 10px;
-    }
-    .tables{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: black;
-        color: white;
-        width:7vw;
-        height: 4vw;
-    }
-    .ready{
-        background-color: green;
-    }
-    .activeUser{
-        background-color: rgb(255, 183, 0);
-    }
-    .activeOther{
-        background-color: red;
-    }
-</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-light sticky-top border-bottom bg-dark">
@@ -66,7 +33,7 @@
             </div>
         </nav>
         <main>
-            <div class="container bg-primary" >
+            <div class="container" >
                 <div class="grid">
                     <div :class="center" v-for="(table,index) in tables">
                         <div class="tables" :class="{'ready': table.status === 'ready', 'activeUser': (table.status === 'active' && table.user === loginacct), 'activeOther': (table.status === 'active' && table.user !== loginacct)}" @click="selectTable(index+1)">
@@ -163,7 +130,7 @@
                 this.accounts.push({
                     username: this.username,
                     password: this.password,
-                    permission: "1",
+                    permission: "general member",
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
@@ -182,28 +149,28 @@
             window.location.href = "./profile.html";
         },
         selectTable(tableNum){
-            if(this.tables[tableNum-1].status == 'ready'){  //โต๊ะว่าง
-                if(this.loginstatus == true){
+            if(this.loginstatus == true){
+                if(this.tables[tableNum-1].status == 'ready'){  //โต๊ะว่าง
                     this.accounts.forEach((account,index) =>{
-                        if(this.loginacct == account.username && account.checkIN == true){
+                        if((this.loginacct == account.username && account.checkIN == true) && this.logininfo.permission != "admin"){
                             return alert("ขออภัย คุณมีโต๊ะที่เช็คอินแล้ว")
                         }
-                        else if(this.loginacct == account.username && account.checkIN == false){
+                        else if((this.loginacct == account.username && account.checkIN == false)|| this.logininfo.permission == "admin"){
                             return window.location.href = "./booking.html?Table="+tableNum+"&User="+this.loginacct;
                         }
                     })
                 }
                 else{
-                alert("กรุณาลงชื่อเข้าใช้ก่อน")
+                    if((this.tables[tableNum-1].user == this.loginacct)|| this.logininfo.permission == "admin"){   //โต๊ะมีคนใช้
+                        window.location.href = "./order.html?Table="+tableNum+"&User="+this.loginacct;
+                    }
+                    else{
+                        alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
+                    }
                 }
             }
             else{
-                if(this.tables[tableNum-1].user == this.loginacct){   //โต๊ะมีคนใช้
-                    window.location.href = "./order.html?Table="+tableNum+"&User="+this.loginacct;
-                }
-                else{
-                    alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
-                }
+                alert("กรุณาลงชื่อเข้าใช้ก่อน")
             }
         }
     },
@@ -220,6 +187,9 @@
         tables(){
             return JSON.parse(localStorage.getItem('tables'));
         },
+        logininfo(){
+                return JSON.parse(localStorage.getItem('logininfo'));
+        }
     },
     watch:{
         accounts:{

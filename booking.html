@@ -4,41 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="css/store.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">  
     <title>NoneQ Stores</title>
 </head>
-<style>
-    .test{
-        height: 50px;
-        width: 50px;
-        background: red;
-    }
-    .grid{
-        display: grid;
-        grid-template-columns: auto auto auto auto auto;
-        gap: 10vh;
-        background-color: gray;
-        padding: 10px;
-    }
-    .tables{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: black;
-        color: white;
-        width:7vw;
-        height: 4vw;
-    }
-    .ready{
-        background-color: green;
-    }
-    .notready{
-        background-color: red;
-    }
-</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-light sticky-top border-bottom bg-dark">
@@ -175,7 +145,7 @@
                 this.accounts.push({
                     username: this.username,
                     password: this.password,
-                    permission: "1",
+                    permission: "general member",
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
@@ -205,18 +175,17 @@
             if(this.tables[table-1].status = "ready"){
                 this.accounts.forEach((account,index) =>{
                     if(this.loginacct == account.username){
-                        if(account.checkIN == false){
+                        if((account.checkIN == false)|| this.logininfo.permission == "admin"){
                             this.accounts[index].checkIN = true
-                            console.log(this.accounts[index].checkIN)
                             this.tables[table-1].status = "active"
                             this.tables[table-1].user = this.loginacct
                             window.localStorage.setItem('tables', JSON.stringify(this.tables))
                             window.localStorage.setItem('accounts', JSON.stringify(this.accounts))
                             alert("checkIN สำเร็จ")
-                            window.location.href = "./instore.html";
+                            return window.location.href = "./instore.html";
                         }
                         else{
-                            alert("ขออภัย คุณมีโต๊ะที่เช็คอินแล้ว")
+                            return alert("ขออภัย คุณมีโต๊ะที่เช็คอินแล้ว")
                         }
                     }
                 })
@@ -238,6 +207,9 @@
         },
         tables(){
             return JSON.parse(localStorage.getItem('tables'));
+        },
+        logininfo(){
+            return JSON.parse(localStorage.getItem('logininfo'));
         }
     },
     watch:{

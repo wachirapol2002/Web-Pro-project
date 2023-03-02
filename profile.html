@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="css/store.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">  
     <title>NoneQ Stores</title>
@@ -35,54 +35,22 @@
         <main>
             <div class="d-flex justify-content-center bg-white p-5 flex-md-row flex-column">  
                 <div class="container col-sm-12 col-md-5 bg-light p-4 m-2 border border-secondary rounded-3 shadow">
-                    <h1 class="rounded-3">{{loginacct}}</h1>
-                    <br>
-                    <form>
+                    <h1 class="rounded-3">Username: {{loginacct}}</h1>
                         <div class="row">
-                            <div class="col-6 text-left">
-                                <label for="firstname">ชื่อ*</label>
-                                <input type="text" maxlength="20" class="form-control" required placeholder="ชื่อ" v-model="firstname">
-                            </div>
-                            <div class="col-6 text-left">
-                                <label for="lastname">นามสกุล*</label>
-                                <input type="text" maxlength="20" class="form-control" required placeholder="นามสกุล" v-model="lastname">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8 text-left">
-                                <label for="tel">หมายเลขโทรศัพท์*</label>
-                                <input type="text" maxlength="10" class="form-control" required placeholder="08xxxxxxxx" v-model="tel">
+                            <div class="col-12 text-left">
+                                <div class="h3">Name: <span class="h4">{{logininfo.firstname+" "+logininfo.lastname}}</span></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 text-left">
-                                <label for="username">ชื่อผู้ใช้*</label>
-                                <input type="text" maxlength="20" class="form-control" required placeholder="username" v-model="username">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 text-left">
-                                <label for="password">รหัสผ่าน*</label>
-                                <input :type="showPassword ? 'text' : 'password'" maxlength="20" class="form-control" required placeholder="password" v-model="password">
-                            </div>
-                            <div class="col-6 text-left">
-                                <label for="password">ยืนยันรหัสผ่าน*</label>
-                                <input :type="showPassword ? 'text' : 'password'" maxlength="20" class="form-control" required placeholder="password" v-model="verifypassword">
+                                <div class="h3">Phone: <span class="h4">{{logininfo.tel}}</span></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 text-left">
-                                <input type="checkbox" v-model="showPassword"><span class="m-2">แสดงรหัสผ่าน</span><br>
+                                <div class="h3">Permission: <span class="h4">{{logininfo.permission}}</span></div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div :class="center">
-                                    <input class="btn btn-dark btn-lg mt-4 mx-2" @click="registerCheck()" value="บันทึก">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>    
         </main>
@@ -173,7 +141,7 @@
                 this.accounts.push({
                     username: this.username,
                     password: this.password,
-                    permission: "1",
+                    permission: "general member",
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
@@ -207,6 +175,9 @@
         },
         tables(){
             return JSON.parse(localStorage.getItem('tables'));
+        },
+        logininfo(){
+            return JSON.parse(localStorage.getItem('logininfo'));
         }
     },
     watch:{
