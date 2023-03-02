@@ -20,7 +20,7 @@
             {
                 username: "admin",
                 password: "password",
-                permission: "5",
+                permission: "admin",
                 firstname: "",
                 lastname: "",
                 tel: ""
