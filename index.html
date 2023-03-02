@@ -13,9 +13,8 @@
     <div id="app">
         <nav class="navbar navbar-light sticky-top border-bottom bg-dark">
             <div class="container-fluid">
-                  <!-- logo -->
                     <div :class="center" @click="outStore">
-                        <img src="image/Logo.png" style="max-height:7.5vh; width: auto;">
+                        <img src="image/Logo.png" style="max-height:7.5vh; width: auto; border-radius: 50%;">
                     </div>
                     <template v-if="loginstatus==true">
                         <div class="d-flex" :class="center" @click="goProfile">
@@ -32,11 +31,11 @@
                     </template>
             </div>
         </nav>
-        <main>
+        
             <div class="container-fluid" :class="center" style="background-color: rgb(84, 84, 84);" @click="enterStore">
-                <img src="image/NoneQ.png" alt="">
+                <img style="width: 47%;" src="image/NoneQ.png" alt="">
             </div>
-        </main>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script>
