@@ -57,7 +57,7 @@
 
                                     <div style="display: flex;justify-content: space-between;">
 
-                                        <div class="icon is-size-5" @click="addToOrder(product)" @click="loginCheck()">
+                                        <div class="icon is-size-5" @click="addToOrder(product)">
                                             <i class="fas fa-shopping-cart"></i>
                                         </div>
 
@@ -93,7 +93,7 @@
                                         <span>x{{product.quantity}}</span>
                                     </div>
                                     <div>
-                                        <span class="icon mr-2" @click="removeFromOrder(product)">
+                                        <span class="icon mr-2" @click="removeFromOrder(product, index)">
                                             <i class="far fa-trash-alt"></i>
                                         </span>
                                     </div>
@@ -285,11 +285,13 @@
                             item.quantity++
                         }
             },
-            removeFromOrder(index) {
-                if(index.quantity > 1){
-                    index.quantity--   
+            removeFromOrder(item, index) {
+                if(item.quantity > 1){
+                    item.quantity--
+                
                 }
-                else if(index.quantity){
+                else if(item.quantity){
+                    item.quantity--
                     this.order.splice(index, 1)
                 }
                 
