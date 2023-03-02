@@ -303,12 +303,15 @@
                 }
                 else{
                     alert("รายการอาหารถูกสั่งเรียบร้อย")
+                    console.log('saved')
+                    const myJSON = JSON.stringify(this.order);
+                    localStorage.setItem("inOrder", myJSON);
                     window.location.href = "./confirm.html";
                 }
             },
-            setZero(index){
-                this.order(index).quantity = 0 
-            },
+            setZero(){
+                this.order = ""
+            }
         },
         computed:{
             loginacct(){
@@ -335,6 +338,9 @@
                 deep: true
             },
         },
+        created() {
+                    this.order = JSON.parse(localStorage.getItem("inOrder"));
+                },
     })
         </script>
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
