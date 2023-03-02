@@ -87,10 +87,13 @@
                 }
             })
             if(this.login == true){
-                alert("รหัสถูก")
+                alert("Login Success")
+                window.localStorage.setItem('username', this.username);
+                window.localStorage.setItem('loginstatus', true);  
+                window.location.href="./index.html";
             }
             else{
-                alert("รหัสผิดดดด")
+                alert("รหัสผิด")
             }
         },
         goRegister(){

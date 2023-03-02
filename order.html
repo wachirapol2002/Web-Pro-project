@@ -57,9 +57,10 @@
 
                                     <div style="display: flex;justify-content: space-between;">
 
-                                        <div class="icon is-size-5" @click="addToOrder(product)">
+                                        <!-- <div class="icon is-size-5" @click="addToOrder(product)">
                                             <i class="fas fa-shopping-cart"></i>
-                                        </div>
+                                        </div> -->
+                                        <button type="button" class="btn btn-success" @click="addToOrder(product)">เพิ่ม</button>
 
                                     </div>
                                 </div>
@@ -74,7 +75,7 @@
             <div class="column is-3 pt-6 pl-0 pr-5">
                 <div style="display: flex;justify-content: space-between;">
                     <span class="title is-size-4 mb-4">รายการอาหารที่สั่ง</span>
-                    <a @click="setZero(product)" class=" mb-4 button">Clear</a>
+                    <a @click="setZero()" class=" mb-4 button">Clear</a>
                 </div>
 
 
@@ -221,7 +222,7 @@
                     alert("Login Success")
                     window.localStorage.setItem('username', this.username);
                     window.localStorage.setItem('loginstatus', true);  
-                    window.location.href="./instore.html";
+                    window.location.href="./index.html";
                 }
                 else{
                     alert("รหัสผิด")
@@ -273,7 +274,7 @@
                 window.location.href = "./instore.html";
             },
             goProfile(){
-            window.location.href = "./profile.html";
+                window.location.href = "./profile.html";
             },
 
             addToOrder(item) {
@@ -290,8 +291,8 @@
                     item.quantity--
                 
                 }
-                else if(item.quantity){
-                    item.quantity--
+                else if(item.quantity <= 1){
+                    item.quantity = 0
                     this.order.splice(index, 1)
                 }
                 
@@ -310,7 +311,10 @@
                 }
             },
             setZero(){
-                this.order = ""
+                this.order.forEach((item,index) =>{
+                    item.quantity = 0;
+                })
+                this.order = []
             }
         },
         computed:{

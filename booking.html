@@ -38,17 +38,17 @@
                     <div class="row" :class="center">
                         <h1 id="head" class="rounded-3"></h1>
                     </div>
-                    <div class="row">
+                    <div class="row" :class="center">
                         <div class="col-6">
                             <div :class="center">
                                 <input id=checkIN class="btn btn-dark btn-md mt-4 mx-2" @click="checkIN()" value="เช็คอิน">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                             <div :class="center">
                                 <input class="btn btn-dark btn-md mt-4 mx-2" @click="" value="จอง">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
         </div>    
@@ -111,7 +111,7 @@
                 alert("Login Success")
                 window.localStorage.setItem('username', this.username);
                 window.localStorage.setItem('loginstatus', true);  
-                window.location.href="./instore.html";
+                window.location.href="./index.html";
             }
             else{
                 alert("รหัสผิด")
@@ -210,7 +210,7 @@
         },
         logininfo(){
             return JSON.parse(localStorage.getItem('logininfo'));
-        }
+        },
     },
     watch:{
         accounts(){
