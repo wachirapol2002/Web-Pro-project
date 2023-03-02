@@ -18,7 +18,7 @@
                         <img src="image/Logo.png" style="max-height:7.5vh; width: auto;">
                     </div>
                     <template v-if="loginstatus==true">
-                        <div class="d-flex" :class="center" @click="goLogin">
+                        <div class="d-flex" :class="center" @click="goProfile">
                             <a class="bi bi-person text-light mx-3" style="font-size: 2rem;"></a>
                             <div class=' fw-bold fs-8 mx-1 text-white' :class="center">{{loginacct}}</div>
                             <button type="button" class="btn btn-danger btn-sm mx-2" @click.stop="logout">Logout</button>
@@ -126,6 +126,7 @@
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
+                    checkIN: false,
                 })
                 alert("สมัครบัญชีสำเร็จ")
                 window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
@@ -138,6 +139,9 @@
         },
         goInStore(){
             window.location.href = "./instore.html";
+        },
+        goProfile(){
+            window.location.href = "./profile.html";
         },
     },
     computed:{

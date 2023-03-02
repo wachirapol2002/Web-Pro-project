@@ -5,6 +5,7 @@ const accounts = [
         permission: "5",
         firstname: "",
         lastname: "",
-        tel: ""
+        tel: "",
+        checkIN: false
     }
 ];

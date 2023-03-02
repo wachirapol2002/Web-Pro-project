@@ -35,7 +35,10 @@
     .ready{
         background-color: green;
     }
-    .notready{
+    .activeUser{
+        background-color: rgb(255, 183, 0);
+    }
+    .activeOther{
         background-color: red;
     }
 </style>
@@ -48,7 +51,7 @@
                         <img src="image/Logo.png" style="max-height:7.5vh; width: auto;">
                     </div>
                     <template v-if="loginstatus==true">
-                        <div class="d-flex" :class="center" @click="goLogin">
+                        <div class="d-flex" :class="center" @click="goProfile">
                             <a class="bi bi-person text-light mx-3" style="font-size: 2rem;"></a>
                             <div class=' fw-bold fs-8 mx-1 text-white' :class="center">{{loginacct}}</div>
                             <button type="button" class="btn btn-danger btn-sm mx-2" @click.stop="logout">Logout</button>
@@ -66,8 +69,9 @@
             <div class="container bg-primary" >
                 <div class="grid">
                     <div :class="center" v-for="(table,index) in tables">
-                        <div class="tables" :class="table.status ? 'ready' : 'notready'" @click="selectTable(index+1)">{{table.num}}</div>
-                        
+                        <div class="tables" :class="{'ready': table.status === 'ready', 'activeUser': (table.status === 'active' && table.user === loginacct), 'activeOther': (table.status === 'active' && table.user !== loginacct)}" @click="selectTable(index+1)">
+                            {{table.num}}
+                        </div>
                     </div>
                   </div>
             </div>
@@ -163,6 +167,7 @@
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
+                    checkIN: false,
                 })
                 alert("สมัครบัญชีสำเร็จ")
                 window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
@@ -173,17 +178,27 @@
         goInStore(){
             window.location.href = "./instore.html";
         },
+        goProfile(){
+            window.location.href = "./profile.html";
+        },
         selectTable(tableNum){
-            if(this.tables[tableNum-1].status == true){
+            if(this.tables[tableNum-1].status == 'ready'){  //โต๊ะว่าง
                 if(this.loginstatus == true){
-                window.location.href = "./booking.html?Table="+tableNum+"&User="+this.loginacct;
+                    this.accounts.forEach((account,index) =>{
+                        if(this.loginacct == account.username && account.checkIN == true){
+                            return alert("ขออภัย คุณมีโต๊ะที่เช็คอินแล้ว")
+                        }
+                        else if(this.loginacct == account.username && account.checkIN == false){
+                            return window.location.href = "./booking.html?Table="+tableNum+"&User="+this.loginacct;
+                        }
+                    })
                 }
                 else{
                 alert("กรุณาลงชื่อเข้าใช้ก่อน")
                 }
             }
             else{
-                if(this.tables[tableNum-1].user == this.loginacct){
+                if(this.tables[tableNum-1].user == this.loginacct){   //โต๊ะมีคนใช้
                     window.location.href = "./booking.html?Table="+tableNum+"&User="+this.loginacct;
                 }
                 else{
@@ -204,7 +219,7 @@
         },
         tables(){
             return JSON.parse(localStorage.getItem('tables'));
-        }
+        },
     },
     watch:{
         accounts:{

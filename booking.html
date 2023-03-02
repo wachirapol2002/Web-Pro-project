@@ -48,7 +48,7 @@
                         <img src="image/Logo.png" style="max-height:7.5vh; width: auto;">
                     </div>
                     <template v-if="loginstatus==true">
-                        <div class="d-flex" :class="center" @click="goLogin">
+                        <div class="d-flex" :class="center" @click="goProfile">
                             <a class="bi bi-person text-light mx-3" style="font-size: 2rem;"></a>
                             <div class=' fw-bold fs-8 mx-1 text-white' :class="center">{{loginacct}}</div>
                             <button type="button" class="btn btn-danger btn-sm mx-2" @click.stop="logout">Logout</button>
@@ -179,6 +179,7 @@
                     firstname: this.firstname,
                     lastname: this.lastname,
                     tel: this.tel,
+                    checkIN: false,
                 })
                 alert("สมัครบัญชีสำเร็จ")
                 window.localStorage.setItem('accounts', JSON.stringify(this.accounts));
@@ -189,6 +190,9 @@
         goInStore(){
             window.location.href = "./instore.html";
         },
+        goProfile(){
+            window.location.href = "./profile.html";
+        },
         selectTable(tableNum){
             if(this.loginstatus == true){
                 window.location.href = "./booking.html?Table="+tableNum;
@@ -198,15 +202,27 @@
             }
         },
         checkIN(){
-            if(this.tables[table-1].status = true){
-                this.tables[table-1].status = !this.tables[table-1].status
-                this.tables[table-1].user = this.loginacct
-                window.localStorage.setItem('tables', JSON.stringify(this.tables))
-                alert("checkIN สำเร็จ")
-                window.location.href = "./instore.html";
+            if(this.tables[table-1].status = "ready"){
+                this.accounts.forEach((account,index) =>{
+                    if(this.loginacct == account.username){
+                        if(account.checkIN == false){
+                            this.accounts[index].checkIN = true
+                            console.log(this.accounts[index].checkIN)
+                            this.tables[table-1].status = "active"
+                            this.tables[table-1].user = this.loginacct
+                            window.localStorage.setItem('tables', JSON.stringify(this.tables))
+                            window.localStorage.setItem('accounts', JSON.stringify(this.accounts))
+                            alert("checkIN สำเร็จ")
+                            window.location.href = "./instore.html";
+                        }
+                        else{
+                            alert("ขออภัย คุณมีโต๊ะที่เช็คอินแล้ว")
+                        }
+                    }
+                })
             }
             else{
-                alert("ขออภัยคณะนี้โต๊ะไม่พร้อมใช้งาน")
+                alert("ขออภัยขณะนี้โต๊ะไม่พร้อมใช้งาน")
             }
         }
     },
@@ -225,11 +241,8 @@
         }
     },
     watch:{
-        accounts:{
-            handler: function(val, oldVal) {
-                window.localStorage.setItem('accounts', JSON.stringify(val));
-            },
-            deep: true
+        accounts(){
+            console.log(this.accounts)
         },
     },
 })
