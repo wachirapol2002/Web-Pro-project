@@ -74,7 +74,7 @@
             <div class="column is-3 pt-6 pl-0 pr-5">
                 <div style="display: flex;justify-content: space-between;">
                     <span class="title is-size-4 mb-4">รายการอาหารที่สั่ง</span>
-                    <a @click="order = []" class=" mb-4 button">Clear</a>
+                    <a @click="setZero(product)" class=" mb-4 button">Clear</a>
                 </div>
 
 
@@ -303,8 +303,11 @@
                 }
                 else{
                     alert("รายการอาหารถูกสั่งเรียบร้อย")
-                    window.location.href = "./order.html";
+                    window.location.href = "./confirm.html";
                 }
+            },
+            setZero(index){
+                this.order(index).quantity = 0 
             },
         },
         computed:{
