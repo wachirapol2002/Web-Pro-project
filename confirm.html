@@ -34,8 +34,8 @@
         </nav>
         
         <div class="container is-max-desktop p-5">
-            <div class="column pt-6 pl-0 pr-0" v-for="inOrder in order">
-                <div class="card mb-4">
+            <div class="column pt-2 pl-0 pr-0" v-for="inOrder in order">
+                <div class="card mb-1">
                     <div class="card-content p-0">
                         <div class="media">
                             <div class="media-left">
@@ -45,20 +45,20 @@
                                 </figure>
                             </div>
                             <div class="media-content pt-2">
-                                <p class="is-5">{{ inOrder.title }}</p>
+                                <p class="title is-5">{{ inOrder.title }}</p>
                                 <p class="has-text-grey-light is-6">{{ inOrder.brand }}</p>
                                 <div style="display: flex;justify-content: space-between;">
                                     <div>
-                                        <span class="is-6 has-text-danger">{{ inOrder.price }}</span>
-                                        <span>x{{ inOrder.quantity }}</span>
+                                        <span>x {{ inOrder.quantity }}</span>
                                     </div>
                                 </div>
                             </div>
+                            <a class="button is-dark mt-5 mr-2" style="color: white;" @click="removeOrder(product, index)">ลบจากรายการ</a>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <a class="button is-dark mt-3" style="width: 100%;color: white;" @click="menuConfirm()">ยืนยันรายการอาหาร</a>
             <hr>
         
     </div>
@@ -171,6 +171,14 @@
         goProfile(){
             window.location.href = "./profile.html";
         },
+        menuConfirm(){
+                    alert("รายการอาหารถูกสั่งเรียบร้อย")
+                    alert("กรุณารอสักครู่เพื่อรอรับอาหาร")
+                    window.location.href = "./instore.html";
+            },
+            removeOrder(item, index) {
+                    this.order.splice(index, 1)
+            },
     },
     computed:{
         loginacct(){
@@ -199,5 +207,6 @@
     },
 })
     </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </body>
 </html>
