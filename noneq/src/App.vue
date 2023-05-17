@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- nav bar -->
-    <nav class="navbar navbar-light sticky-top border-bottom bg-dark">
+    <nav class="navbar navbar-light sticky-top border-bottom bg-dark" style="height: 10vh;">
             <div class="container-fluid">
                   <!-- logo -->
                     <div :class="center">
@@ -9,7 +9,9 @@
                     </div>
                     <div class="d-flex" :class="center" >
                         <a class="bi bi-person text-light mx-3" style="font-size: 2rem;"></a>
+                        <router-link to="/user/login">
                         <div class=' fw-bold fs-8 mx-1 text-white' :class="center">เข้าสู่ระบบ/ลงทะเบียน</div>
+                        </router-link>
                     </div>
             </div>
     </nav>

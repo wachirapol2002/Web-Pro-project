@@ -15,7 +15,6 @@ export default {
     return {
       search: "",
       tables: [],
-      blogs:[],
       center:{
       'd-flex': true,
       'justify-content-center':true,
@@ -25,7 +24,6 @@ export default {
   },
   mounted() {
     this.getTables();
-    this.getBlogs();
   },
   methods: {
     getTables() {
@@ -36,19 +34,6 @@ export default {
         })
         .then(response => {
           this.tables = response.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getBlogs() {
-      axios.get("http://localhost:3000", {
-          params: {
-            search: this.search
-          }
-        })
-        .then(response => {
-          this.blogs = response.data;
         })
         .catch(err => {
           console.log(err);

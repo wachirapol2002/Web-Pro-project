@@ -41,8 +41,9 @@ router.post('/user/signup', async (req, res, next) => {
     try {
         await signupSchema.validateAsync(req.body, { abortEarly: false })
     } catch (err) {
-        return res.status(400).json(err)
+        return res.status(400).send(err)
     }
+
     const conn = await pool.getConnection()
     await conn.beginTransaction()
 
@@ -55,8 +56,7 @@ router.post('/user/signup', async (req, res, next) => {
 
     try {
         await conn.query(
-            'INSERT INTO users(username, password, first_name, last_name, email, mobile) ' +
-            'VALUES (?, ?, ?, ?, ?, ?)',
+            'INSERT INTO users(username, password, first_name, last_name, email, mobile) VALUES (?, ?, ?, ?, ?, ?)',
             [username, password, first_name, last_name, email, mobile]
         )
         conn.commit()
