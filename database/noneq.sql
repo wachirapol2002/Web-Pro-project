@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2023 at 09:41 PM
+-- Generation Time: May 18, 2023 at 03:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -24,12 +24,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acccount`
+-- Table structure for table `accounts`
 --
 
-CREATE TABLE `acccount` (
+CREATE TABLE `accounts` (
   `username` varchar(20) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
-  `password` varchar(20) NOT NULL COMMENT 'รหัสผ่าน',
+  `password` varchar(255) NOT NULL COMMENT 'รหัสผ่าน',
   `permission` enum('staff','customer','VIP','') NOT NULL COMMENT 'ระดับการอนุญาต',
   `firstname` varchar(100) NOT NULL COMMENT 'ชื่อ',
   `lastname` varchar(100) NOT NULL COMMENT 'นามสกุล',
@@ -180,9 +180,9 @@ CREATE TABLE `vip` (
 --
 
 --
--- Indexes for table `acccount`
+-- Indexes for table `accounts`
 --
-ALTER TABLE `acccount`
+ALTER TABLE `accounts`
   ADD PRIMARY KEY (`username`);
 
 --
@@ -298,14 +298,14 @@ ALTER TABLE `vip`
 -- Constraints for table `booking`
 --
 ALTER TABLE `booking`
-  ADD CONSTRAINT `booking_account` FOREIGN KEY (`username`) REFERENCES `acccount` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `booking_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `booking_tables` FOREIGN KEY (`table_num`) REFERENCES `tables` (`table_num`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `checkin`
 --
 ALTER TABLE `checkin`
-  ADD CONSTRAINT `checkin_account` FOREIGN KEY (`username`) REFERENCES `acccount` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `checkin_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `checkin_booking` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`booking_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `checkin_tables` FOREIGN KEY (`table_num`) REFERENCES `tables` (`table_num`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -326,14 +326,14 @@ ALTER TABLE `order_details`
 -- Constraints for table `payments`
 --
 ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_account` FOREIGN KEY (`username`) REFERENCES `acccount` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payments_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `payments_tables` FOREIGN KEY (`table_num`) REFERENCES `tables` (`table_num`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `vip`
 --
 ALTER TABLE `vip`
-  ADD CONSTRAINT `vip_account` FOREIGN KEY (`username`) REFERENCES `acccount` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `vip_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

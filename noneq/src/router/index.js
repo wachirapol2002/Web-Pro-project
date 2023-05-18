@@ -19,6 +19,21 @@ const routes = [
     name: 'Signup',
     component: () => import('../views/user/Signup.vue')
   },
+  {
+    path: '/user/profile',
+    name: 'Profile',
+    component: () => import('../views/user/Profile.vue')
+  },
+  {
+    path: '/user/profile-edit',
+    name: 'Profile-edit',
+    component: () => import('../views/user/Profile-edit.vue')
+  },
+  {
+    path: '/user/change-password',
+    name: 'PasswordChange',
+    component: () => import('../views/user/Password-change.vue')
+  },
 ]
 
 const router = new VueRouter({
