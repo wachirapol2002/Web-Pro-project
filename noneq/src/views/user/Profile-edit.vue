@@ -75,9 +75,7 @@
                     
                     <div class="row my-2">
                       <div class="form-group d-flex justify-content-center">
-                          <router-link to="/user/Profile">
-                            <div class="btn btn-dark btn-md mt-4 mx-2">Back</div>
-                          </router-link>
+                          <div class="btn btn-dark btn-md mt-4 mx-2" @click="back()">Back</div>
                           <div class="btn btn-dark btn-md mt-4 mx-2" @click="save()">Save</div>
                       </div>
                     </div>
@@ -103,6 +101,7 @@ export default {
   name: "ProfileEditPage",
   data() {
     return {
+      previousRoutes: [],
       username: this.$cookies.get('account').username,
       firstname: this.$cookies.get('account').firstname,
       lastname: this.$cookies.get('account').lastname,
@@ -132,7 +131,7 @@ export default {
       phone: phone,
     },
   },
-   methods: {
+  methods: {
     save() {
       // Validate all fields
       this.$v.$touch();
@@ -166,6 +165,19 @@ export default {
             alert(err.response.data.details.message)
           });
       }
+    },
+    back() {
+      if (this.previousRoutes.length > 0) {
+        const previousRoute = this.previousRoutes.pop()
+        this.$router.push(previousRoute)
+      } else {
+        this.$router.go(-1)
+      }
+    },
+  },
+  watch: {
+    '$route'(to, from) {
+      this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
     },
   },
 };

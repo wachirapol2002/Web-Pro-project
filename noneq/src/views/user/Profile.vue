@@ -63,23 +63,35 @@ export default {
   name: "ProfilePage",
   data() {
     return {
-      username: this.$cookies.get('account').username,
-      firstname: this.$cookies.get('account').firstname,
-      lastname: this.$cookies.get('account').lastname,
-      email: this.$cookies.get('account').email,
-      phone: this.$cookies.get('account').phone,
-      permission: this.$cookies.get('account').permission,
-      center:{
-      'd-flex': true,
-      'justify-content-center':true,
-      'align-items-center':true
+    previousRoutes: [],
+    username: this.$cookies.get('account').username,
+    firstname: this.$cookies.get('account').firstname,
+    lastname: this.$cookies.get('account').lastname,
+    email: this.$cookies.get('account').email,
+    phone: this.$cookies.get('account').phone,
+    permission: this.$cookies.get('account').permission,
+    center:{
+    'd-flex': true,
+    'justify-content-center':true,
+    'align-items-center':true
     },
     };
   },
-    methods: {
+  methods: {
     back() {
-        this.$router.go(-1)
-      }
+        if (this.previousRoutes.length > 0) {
+            const previousRoute = this.previousRoutes.pop()
+            this.$router.push(previousRoute)
+        } else {
+            this.$router.go(-1)
+        }
     },
+  },
+  watch: {
+    '$route'(to, from) {
+        this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
+    },
+  },
+    
 };
 </script>

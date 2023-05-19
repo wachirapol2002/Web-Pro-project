@@ -52,6 +52,7 @@ export default {
   name: "LoginPage",
   data() {
     return {
+      previousRoutes: [],
       username: '',
       password: '',
       showpassword: false,

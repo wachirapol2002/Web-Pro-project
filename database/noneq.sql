@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2023 at 03:34 PM
+-- Generation Time: May 19, 2023 at 09:36 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -36,6 +36,13 @@ CREATE TABLE `accounts` (
   `email` varchar(100) NOT NULL COMMENT 'อีเมล',
   `phone` varchar(10) NOT NULL COMMENT 'หมายเลขโทรศัพท์'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`username`, `password`, `permission`, `firstname`, `lastname`, `email`, `phone`) VALUES
+('kaka24502', '$2b$05$j.OkIufdPhjIdAfvEfob6Oh7PM1k3CUOkky3UWfdKkQR3H7Avfjbi', 'staff', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945');
 
 -- --------------------------------------------------------
 
@@ -129,39 +136,35 @@ CREATE TABLE `payments` (
 CREATE TABLE `tables` (
   `table_num` int(2) NOT NULL COMMENT 'หมายเลขโต๊ะ',
   `total_price` int(10) NOT NULL COMMENT 'ราคารวมทั้งโต๊ะ',
-  `table_status` enum('available','unavailable','booked','') NOT NULL COMMENT 'สถานะโต๊ะ'
+  `table_status` enum('available','unavailable','booked','') NOT NULL COMMENT 'สถานะโต๊ะ',
+  `username` varchar(20) DEFAULT NULL COMMENT 'ชื่อผู้ใช้งาน'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tables`
 --
 
-INSERT INTO `tables` (`table_num`, `total_price`, `table_status`) VALUES
-(1, 0, 'available'),
-(2, 0, 'available'),
-(3, 0, 'available'),
-(4, 0, 'available'),
-(5, 0, 'available'),
-(6, 0, 'available'),
-(7, 0, 'available'),
-(8, 0, 'available'),
-(9, 0, 'available'),
-(10, 0, 'available'),
-(11, 0, 'available'),
-(12, 0, 'available'),
-(13, 0, 'available'),
-(14, 0, 'available'),
-(15, 0, 'available'),
-(16, 0, 'available'),
-(17, 0, 'available'),
-(18, 0, 'available'),
-(19, 0, 'available'),
-(20, 0, 'available'),
-(21, 0, 'available'),
-(22, 0, 'available'),
-(23, 0, 'available'),
-(24, 0, 'available'),
-(25, 0, 'available');
+INSERT INTO `tables` (`table_num`, `total_price`, `table_status`, `username`) VALUES
+(1, 0, 'available', NULL),
+(2, 0, 'available', NULL),
+(3, 0, 'available', NULL),
+(4, 0, 'available', NULL),
+(5, 0, 'available', NULL),
+(6, 0, 'available', NULL),
+(7, 0, 'available', NULL),
+(8, 0, 'available', NULL),
+(9, 0, 'available', NULL),
+(10, 0, 'available', NULL),
+(11, 0, 'available', NULL),
+(12, 0, 'available', NULL),
+(13, 0, 'available', NULL),
+(14, 0, 'available', NULL),
+(15, 0, 'available', NULL),
+(16, 0, 'available', NULL),
+(17, 0, 'available', NULL),
+(18, 0, 'available', NULL),
+(19, 0, 'available', NULL),
+(20, 0, 'available', NULL);
 
 -- --------------------------------------------------------
 
@@ -235,7 +238,8 @@ ALTER TABLE `payments`
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
-  ADD PRIMARY KEY (`table_num`);
+  ADD PRIMARY KEY (`table_num`),
+  ADD KEY `tables_accounts` (`username`);
 
 --
 -- Indexes for table `vip`
@@ -328,6 +332,12 @@ ALTER TABLE `order_details`
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `payments_tables` FOREIGN KEY (`table_num`) REFERENCES `tables` (`table_num`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tables`
+--
+ALTER TABLE `tables`
+  ADD CONSTRAINT `tables_accounts` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`);
 
 --
 -- Constraints for table `vip`

@@ -147,6 +147,7 @@ export default {
   name: "SignupPage",
   data() {
     return {
+      previousRoutes: [],
       username: "",
       password: "",
       confirmPassword: "",
@@ -191,7 +192,7 @@ export default {
       sameAs: sameAs("password"),
     },
   },
-   methods: {
+  methods: {
     submit() {
       // Validate all fields
       this.$v.$touch();
@@ -217,6 +218,11 @@ export default {
             alert(err.response.data.details.message)
           });
       }
+    },
+  },
+  watch: {
+    '$route'(to, from) {
+        this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
     },
   },
 };

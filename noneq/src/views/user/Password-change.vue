@@ -64,10 +64,8 @@
                     
                     <div class="row my-2">
                       <div class="form-group d-flex justify-content-center">
-                          <router-link to="/user/Profile">
-                            <div class="btn btn-dark btn-md mt-4 mx-2">Profile</div>
-                          </router-link>
-                          <div class="btn btn-dark btn-md mt-4 mx-2" @click="Update()">Change Password</div>
+                          <div class="btn btn-danger btn-md mt-4 mx-2" @click="back()">Cancel</div>
+                          <div class="btn btn-dark btn-md mt-4 mx-2" @click="Update()">Confirm</div>
                       </div>
                     </div>
                 </form>
@@ -96,11 +94,12 @@ export default {
   name: "PasswordChangePage",
   data() {
     return {
+      previousRoutes: [],
       username: this.$cookies.get('account').username,
       oldPassword: "",
       newPassword: "",
       confirmPassword: "",
-      showPassword: false,
+      showpassword: false,
       error: "",
       center:{
       'd-flex': true,
@@ -122,7 +121,7 @@ export default {
       sameAs: sameAs("newPassword"),
     },
   },
-   methods: {
+  methods: {
     Update() {
       // Validate all fields
       this.$v.$touch();
@@ -145,6 +144,19 @@ export default {
             console.log(error.response.data)
           });
       }
+    },
+    back() {
+      if (this.previousRoutes.length > 0) {
+        const previousRoute = this.previousRoutes.pop()
+        this.$router.push(previousRoute)
+      } else {
+        this.$router.go(-1)
+      }
+    },
+  },
+  watch: {
+    '$route'(to, from) {
+      this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
     },
   },
 };

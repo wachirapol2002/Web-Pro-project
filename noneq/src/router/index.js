@@ -35,6 +35,11 @@ const routes = [
     component: () => import('../views/user/Password-change.vue')
   },
   {
+    path: '/tables',
+    name: 'Tables',
+    component: () => import('../views/table/Tables.vue')
+  },
+  {
     path: '/order',
     name: 'Order',
     component: () => import('../views/Order.vue')

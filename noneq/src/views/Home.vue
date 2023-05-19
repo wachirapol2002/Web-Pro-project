@@ -11,8 +11,6 @@
         </div>  
     </div>
     </div>
-    
-
     <div class="position-absolute container-fluid d-flex flex-column justify-content-center align-items-center ">
       <div class="d-flex flex-column align-items-center fw-bold text-white pt-5" style="background-color: rgb(84, 84, 84);
        border-left: 8px solid white ; border-right: 8px solid white; height: 100vh; ">
@@ -20,7 +18,7 @@
         <img :src="require('@/assets/NoneQ.png')" style="width: 650px; border-radius: 50%;">
         <div class="position-absolute"
           style="border-top: 5px solid white; border-bottom: 5px solid white; margin-top: 450px;">
-          <router-link to="">
+          <router-link to="/tables">
             <button class="btn fw-bold text-white ps-5 pe-5 " style="font-size: 60px;"
               :style="{ backgroundColor: isHover ? 'rgb(110, 110, 110, 0.5)' : 'rgb(84, 84, 84)' }"
               @mouseover="isHover = true" @mouseleave="isHover = false">
@@ -46,6 +44,7 @@ export default {
   name: "HomePage",
   data() {
     return {
+      previousRoutes: [],
       isHover: false,
       search: "",
       tables: [],
@@ -73,7 +72,12 @@ export default {
           console.log(err);
         });
     },
-  }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
+    },
+  },
   
 };
 </script>
