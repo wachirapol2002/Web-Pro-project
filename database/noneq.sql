@@ -86,6 +86,16 @@ CREATE TABLE `menus` (
   `menu_price` int(10) NOT NULL COMMENT 'ราคาเมนู'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `menus` (`menu_id`, `menu_pic`, `menu_name`, `menu_price`) VALUES
+  (1, '/assets/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50),
+	(2, '/assets/imagefood/Bacon.jpg', 'เบคอน', 50),
+	(3, '/assets/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50),
+	(4, '/assets/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50),
+	(5, '/assets/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50),
+	(6, '/assets/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50),
+	(7, '/assets/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50),
+	(8, '/assets/imagefood/egg.jpg', 'ไข่ไก่', 50);
+
 -- --------------------------------------------------------
 
 --

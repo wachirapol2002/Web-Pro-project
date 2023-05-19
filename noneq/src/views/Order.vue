@@ -10,7 +10,7 @@
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-1by1">
-                                        <img :src="+product.menu_pic">  
+                                        <img :src="require('@/assets/imagefood/SlicedPorkNeck.jpg')">  
                                     </figure>
                                 </div>
                                 <div class="card-content">

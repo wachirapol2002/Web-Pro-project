@@ -44,6 +44,11 @@ const routes = [
     name: 'Order',
     component: () => import('../views/Order.vue')
   },
+  {
+    path: '/confirm',
+    name: 'Comfirm',
+    component: () => import('../views/Confirm.vue')
+  },
 ]
 
 const router = new VueRouter({
