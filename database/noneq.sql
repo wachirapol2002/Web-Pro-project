@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2023 at 09:36 PM
+-- Generation Time: May 20, 2023 at 01:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -86,15 +86,19 @@ CREATE TABLE `menus` (
   `menu_price` int(10) NOT NULL COMMENT 'ราคาเมนู'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `menus`
+--
+
 INSERT INTO `menus` (`menu_id`, `menu_pic`, `menu_name`, `menu_price`) VALUES
-  (1, '/assets/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50),
-	(2, '/assets/imagefood/Bacon.jpg', 'เบคอน', 50),
-	(3, '/assets/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50),
-	(4, '/assets/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50),
-	(5, '/assets/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50),
-	(6, '/assets/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50),
-	(7, '/assets/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50),
-	(8, '/assets/imagefood/egg.jpg', 'ไข่ไก่', 50);
+(0000000001, '/assets/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50),
+(0000000002, '/assets/imagefood/Bacon.jpg', 'เบคอน', 50),
+(0000000003, '/assets/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50),
+(0000000004, '/assets/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50),
+(0000000005, '/assets/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50),
+(0000000006, '/assets/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50),
+(0000000007, '/assets/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50),
+(0000000008, '/assets/imagefood/egg.jpg', 'ไข่ไก่', 50);
 
 -- --------------------------------------------------------
 
@@ -278,7 +282,7 @@ ALTER TABLE `checkin`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `menu_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสเมนู';
+  MODIFY `menu_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสเมนู', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -347,7 +351,7 @@ ALTER TABLE `payments`
 -- Constraints for table `tables`
 --
 ALTER TABLE `tables`
-  ADD CONSTRAINT `tables_accounts` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`);
+  ADD CONSTRAINT `tables_accounts` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `vip`
