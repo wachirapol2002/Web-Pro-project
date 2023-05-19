@@ -1,13 +1,13 @@
 <template>
   <div id="app">
 
-    <div class="position-absolute ">
+    <div class="position-absolute">
       <div class="position-inline row">
         <div class="col-md-6">
-          <img :src="require('@/assets/res_pic1.jpg')" style="width: 100vw; min-height: 90vh; opacity: 0.8;">
+          <img :src="require('@/assets/res_pic1.jpg')" style="width: 100vw; min-height: 100vh; opacity: 0.8;">
         </div>
         <div class="col-md-6">
-          <img :src="require('@/assets/res_pic2.jpg')" style="width: 100vw; min-height: 90vh; opacity: 0.8;">
+          <img :src="require('@/assets/res_pic2.jpg')" style="width: 100vw; min-height: 100vh; opacity: 0.8;">
         </div>  
     </div>
     </div>
@@ -15,7 +15,7 @@
 
     <div class="position-absolute container-fluid d-flex flex-column justify-content-center align-items-center ">
       <div class="d-flex flex-column align-items-center fw-bold text-white pt-5" style="background-color: rgb(84, 84, 84);
-       border-left: 8px solid white ; border-right: 8px solid white; min-height: 90vh; ">
+       border-left: 8px solid white ; border-right: 8px solid white; height: 100vh; ">
         <p class="h1 position-absolute pt-5" style=" font-size: 70px;"><i>W e l c o m e  </i></p>
         <img :src="require('@/assets/NoneQ.png')" style="width: 650px; border-radius: 50%;">
         <div class="position-absolute"
