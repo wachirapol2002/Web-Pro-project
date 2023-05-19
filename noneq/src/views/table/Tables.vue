@@ -37,9 +37,11 @@
             <div class="grid">
                 <div :class="center" v-for="table in tables" :key="table.table_num">
                     <div class="tables" :class="{
-                        'available': (table.table_status == 'available' || table.username == null),
-                        'booked': (table.table_status == 'booked' && table.username == this.username.username),
-                        'unavailable': (table.table_status == 'unavailable' && table.username != this.username.username)}">
+                        'bg-success': (table.table_status == 'available'),
+                        'bg-warning': (table.table_status == 'booked'),
+                        'bg-danger': (table.table_status == 'unavailable'),
+                        }" @click="selectTable(table.table_num)">
+                        
                         {{table.table_num}}
                     </div>
                 </div>
@@ -50,17 +52,14 @@
 
 <script>
 import axios from "axios";
-import {required,} from "vuelidate/lib/validators";
 export default {
-  name: "LoginPage",
+  name: "TablesPage",
   data() {
     return {
       previousRoutes: [],
       tables: [],
       username: '',
-      password: '',
-      showpassword: false,
-      error: '',
+      haveTable: false,
       center:{
         'd-flex': true,
         'justify-content-center':true,
@@ -72,6 +71,7 @@ export default {
     this.getTables();
     if(this.$cookies.isKey('account')){
         this.username = this.$cookies.get('account')
+        this.checkhaveTable();
     }else{
         this.username = ""
     }
@@ -87,14 +87,42 @@ export default {
           console.log(err);
         });
     },
-  },
-  validations: {
-    username: {
-      required: required,
+    async checkhaveTable() {
+        const data = {
+            username: this.$cookies.get('account').username,
+        }
+        axios.post("http://localhost:3000/table/haveTable", data)
+        .then(response => {
+            this.haveTable = response.data.result
+            console.log(this.haveTable)
+        })
+        .catch(err => {
+            console.log(err);
+        });
     },
-    password: {
-      required: required,
-    },
+    selectTable(tableNum){
+        if(this.$cookies.isKey('account')){
+            if(this.tables[tableNum-1].table_status == 'available'){  //โต๊ะว่าง
+                if((this.haveTable == true) && this.$cookies.get('account').permission != "staff"){
+                    return alert("ขออภัย คุณมีโต๊ะอยู่แล้ว")
+                }
+                else if((this.haveTable == false) || this.$cookies.get('account').permission == "staff"){
+                    this.$router.push({path:'/tables/booking', query: { table: tableNum }})
+                }
+            }
+            else{
+                if((this.tables[tableNum-1].username == this.$cookies.get('account').username)|| this.$cookies.get('account').permission == "staff"){   //โต๊ะมีคนใช้
+                    // window.location.href = "./order.html?Table="+tableNum+"&User="+this.loginacct;
+                }
+                else{
+                    alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
+                }
+            }
+        }
+        else{
+            alert("กรุณาลงชื่อเข้าใช้ก่อน")
+        }
+    }
   },
 };
 </script>

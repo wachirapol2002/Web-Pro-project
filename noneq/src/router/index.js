@@ -40,6 +40,11 @@ const routes = [
     component: () => import('../views/table/Tables.vue')
   },
   {
+    path: '/tables/booking',
+    name: 'Booking',
+    component: () => import('../views/table/Booking.vue')
+  },
+  {
     path: '/order',
     name: 'Order',
     component: () => import('../views/Order.vue')

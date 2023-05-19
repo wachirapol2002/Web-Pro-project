@@ -85,8 +85,6 @@ export default {
             this.$cookies.set('account', account)
             alert("Login Success");
             this.$router.push({path: '/'})
-            console.log(this.$cookies.get('account'))
-            console.log(this.$cookies.keys())
             
           })
           .catch(error => {
