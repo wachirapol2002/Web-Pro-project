@@ -5,18 +5,17 @@
             <div class="column is-8 pt-6">
                 <div class="container is-max-desktop">
                     <div class="is-multiline columns is-variable is-2">
-
                         <div id="card_product" class="column is-one-quarter">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-1by1">
-                                        <img :src="require('@/assets/logo.png')" style="width:100%; height: 100%;">
+                                        <img :src="menu.menu_pic" style="width:100%; height: 100%;">
                                     </figure>
                                 </div>
                                 <div class="card-content">
                                     <div class="media">
                                         <div class="media-content">
-                                            <p class="title is-4">สันคอหมู</p>
+                                            <p v-text="menus.menu_name" class="title is-4"></p>
                                         </div>
                                     </div>
                                     <div style="display: flex;">
@@ -26,73 +25,37 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div id="card_product" class="column is-one-quarter">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-1by1">
-                                        <img :src="require('@/assets/logo.png')" style="width:100%; height: 100%;">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-4">สันคอหมู</p>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex;">
-                                        <button type="button" class="btn btn-dark"
-                                            @click="addToOrder(product)">เพิ่มลงรายการอาหาร</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="card_product" class="column is-one-quarter">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-1by1">
-                                        <img :src="require('@/assets/logo.png')" style="width:100%; height: 100%;">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-4">สันคอหมู</p>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex;">
-                                        <button type="button" class="btn btn-dark"
-                                            @click="addToOrder(product)">เพิ่มลงรายการอาหาร</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="card_product" class="column is-one-quarter">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-1by1">
-                                        <img :src="require('@/assets/logo.png')" style="width:100%; height: 100%;">
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-4">สันคอหมู</p>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex;">
-                                        <button type="button" class="btn btn-dark"
-                                            @click="addToOrder(product)">เพิ่มลงรายการอาหาร</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
                         
                     </div>
                 </div>
             </div>
+
+            <!-- <div class="column is-3 pt-6 pl-0 pr-5">
+                <div style="display: flex;justify-content: space-between;">
+                    <span class="title is-size-4 mb-4">รายการอาหารที่สั่ง</span>
+                    <a @click="setZero()" class=" mb-4 button">Clear</a>
+                </div>
+
+                <div class="card-content p-0">
+                    <div class="media">
+                        <div class="media-content pt-2">
+                            <p class="is-5"></p>
+                            <div style="display: flex;justify-content: space-between;">
+                                <div>
+                                    <span></span>
+                                </div>
+                                <div>
+                                    <span class="icon mr-2" @click="removeFromOrder(product, index)">
+                                        <i class="far fa-trash-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="button is-dark mt-3" style="width: 100%;color: white;" @click="menuConfirm()">Confirm</a>
+            </div> -->
+
         </div>
 
     </div>
@@ -107,30 +70,24 @@ export default {
     name: "OrderPage",
     data() {
         return {
-            search: "",
-            tables: [],
-            center: {
-                'd-flex': true,
-                'justify-content-center': true,
-                'align-items-center': true
-            },
+            menus: [],
         };
     },
     methods: {
-        getTables() {
-            axios.get("http://localhost:3000", {
-                params: {
-                    search: this.search
-                }
+        getMenu() {
+            axios.get("http://localhost:3000/menu", {
             })
                 .then(response => {
-                    this.tables = response.data;
+                    this.menus = response.data.data;
                 })
                 .catch(err => {
                     console.log(err);
                 });
         },
-    }
+    },
+    mounted(){
+        this.getMenu();
+    },
 
 };
 </script>
