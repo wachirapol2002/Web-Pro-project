@@ -1,26 +1,23 @@
 <template>
   <div id="app">
 
-    <MDBCarousel
-    v-model="carousel3"
-    :items="items3"
-    :indicators="false"
-  />
-    <div class="position-absolute">
-      <div class="position-inline">
-      <img :src="require('@/assets/res_pic1.jpg')" style="width: 950px; height: 870px; opacity: 0.8;">
-      <img :src="require('@/assets/res_pic2.jpg')" style="width: 950px; height: 870px; opacity: 0.8;">
+    <div class="position-absolute ">
+      <div class="position-inline row">
+        <div class="col-md-6">
+          <img :src="require('@/assets/res_pic1.jpg')" style="width: 100vw; min-height: 90vh; opacity: 0.8;">
+        </div>
+        <div class="col-md-6">
+          <img :src="require('@/assets/res_pic2.jpg')" style="width: 100vw; min-height: 90vh; opacity: 0.8;">
+        </div>  
     </div>
     </div>
     
 
-    <div class="position-absolute container-fluid d-flex flex-column justify-content-center align-items-center "
-      style="min-height: 90vh;">
-      <div class="d-flex flex-column align-items-center fw-bold text-white" style="background-color: rgb(84, 84, 84);
-       padding-bottom: 170px; padding-top: 50px; border-left: 8px solid white ; border-right: 8px solid white;">
-        <p class="h1 position-absolute" style=" font-size: 70px;"><i>W e l c o m e  </i></p>
+    <div class="position-absolute container-fluid d-flex flex-column justify-content-center align-items-center ">
+      <div class="d-flex flex-column align-items-center fw-bold text-white pt-5" style="background-color: rgb(84, 84, 84);
+       border-left: 8px solid white ; border-right: 8px solid white; min-height: 90vh; ">
+        <p class="h1 position-absolute pt-5" style=" font-size: 70px;"><i>W e l c o m e  </i></p>
         <img :src="require('@/assets/NoneQ.png')" style="width: 650px; border-radius: 50%;">
-
         <div class="position-absolute"
           style="border-top: 5px solid white; border-bottom: 5px solid white; margin-top: 450px;">
           <router-link to="">
