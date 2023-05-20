@@ -91,14 +91,14 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`menu_id`, `menu_pic`, `menu_name`, `menu_price`) VALUES
-(0000000001, '/assets/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50),
-(0000000002, '/assets/imagefood/Bacon.jpg', 'เบคอน', 50),
-(0000000003, '/assets/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50),
-(0000000004, '/assets/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50),
-(0000000005, '/assets/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50),
-(0000000006, '/assets/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50),
-(0000000007, '/assets/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50),
-(0000000008, '/assets/imagefood/egg.jpg', 'ไข่ไก่', 50);
+(0000000001, '/static/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50),
+(0000000002, '/static/imagefood/Bacon.jpg', 'เบคอน', 50),
+(0000000003, '/static/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50),
+(0000000004, '/static/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50),
+(0000000005, '/static/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50),
+(0000000006, '/static/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50),
+(0000000007, '/static/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50),
+(0000000008, '/static/imagefood/egg.jpg', 'ไข่ไก่', 50);
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,7 @@ INSERT INTO `menus` (`menu_id`, `menu_pic`, `menu_name`, `menu_price`) VALUES
 CREATE TABLE `orders` (
   `order_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสคำสั่งซื้อ',
   `order_price` int(10) NOT NULL COMMENT 'ราคาคำสั่งซื้อ',
-  `order_time` datetime NOT NULL COMMENT 'เวลาคำสั่งซื้อ',
+  `order_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'เวลาคำสั่งซื้อ',
   `table_num` int(2) NOT NULL COMMENT 'หมายเลขโต๊ะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

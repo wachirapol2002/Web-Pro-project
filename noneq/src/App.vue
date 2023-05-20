@@ -5,7 +5,7 @@
             <div class="container-fluid">
                   <!-- logo -->
                     <router-link to="/">
-                      <div :class="center">
+                      <div :class="center" style="border: 1px solid white; border-radius: 5%;">
                           <img :src="require('./assets/logo.png')" style="max-height:7.5vh; width: auto; border-radius: 50%;">
                       </div>
                     </router-link>

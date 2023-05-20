@@ -1,12 +1,13 @@
 const express = require("express")
 const cookieSession = require('cookie-session');
+const path = require("path");
 
 const app = express();
 const cors = require('cors')
 app.use(cors())
 
 // Statics
-app.use(express.static('static'))
+app.use('/static/imagefood', express.static(path.join(__dirname, 'static/imagefood')));
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
@@ -22,9 +23,11 @@ const indexRouter = require('./routes/index')
 const userRouter = require('./routes/user')
 const tableRouter = require('./routes/table')
 
+
 app.use(indexRouter.router)
 app.use(userRouter.router)
 app.use(tableRouter.router)
+
 
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:3000`)

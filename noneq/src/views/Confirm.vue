@@ -1,14 +1,14 @@
 <template>
   <div id="app">
 
-    <div class="container is-max-desktop p-5">
+    <div class="container is-max-desktop p-5 ">
       <div class="column pt-2 pl-0 pr-0">
         <div class="card mb-1">
           <div class="card-content p-0">
             <div class="media">
               <div class="media-left">
                 <figure class="image is-96x96">
-                  <img :src="require('@/assets/imagefood/SlicedPorkNeck.jpg')">
+                  <!-- <img :src="require('../assets/imagefood/SlicedPorkNeck.jpg')"> -->
                 </figure>
               </div>
               <div class="media-content pt-2">
@@ -20,13 +20,12 @@
                   </div>
                 </div>
               </div>
-              <a class="button is-dark mt-5 mr-2 fw-bold fs-5" style="color: white; text-decoration: none;"
-                @click="removeOrder(product, index)">ลบจากรายการ</a>
             </div>
           </div>
         </div>
-      </div>
-      <a class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;" @click="menuConfirm()">ยืนยันรายการอาหาร</a>
+      </div><router-link to="/tables">
+      <a class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;" @click="menuConfirm()">Home</a>
+    </router-link>
       <hr>
     </div>
 
