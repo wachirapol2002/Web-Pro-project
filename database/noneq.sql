@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2023 at 01:41 AM
+-- Generation Time: May 21, 2023 at 01:40 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -42,7 +42,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`username`, `password`, `permission`, `firstname`, `lastname`, `email`, `phone`) VALUES
-('kaka24502', '$2b$05$j.OkIufdPhjIdAfvEfob6Oh7PM1k3CUOkky3UWfdKkQR3H7Avfjbi', 'staff', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945');
+('kaka24502', '$2b$05$j.OkIufdPhjIdAfvEfob6Oh7PM1k3CUOkky3UWfdKkQR3H7Avfjbi', 'staff', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945'),
+('kaka24503', '$2b$05$u/1dC5V73bcdMbW4XRSZEuGkBOYJRVfbyNu0sKWC4AVmNVkKaov5W', 'customer', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945');
 
 -- --------------------------------------------------------
 
@@ -54,7 +55,6 @@ CREATE TABLE `booking` (
   `booking_id` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'รหัสการจอง',
   `username` varchar(20) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `table_num` int(2) NOT NULL COMMENT 'หมายเลขโต๊ะ',
-  `booking_date` date NOT NULL COMMENT 'วันที่จอง',
   `booking_time` time NOT NULL COMMENT 'เวลาที่จอง',
   `create_booking` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'เวลาที่สร้างการจอง'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
