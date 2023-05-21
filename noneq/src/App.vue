@@ -11,15 +11,28 @@
                           <img :src="require('./assets/logo.png')" style="max-height:7.5vh; width: auto; border-radius: 50%;">
                       </div>
                     </router-link>
-                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverBooking }]" @mouseover="hoverBooking = true" @mouseleave="hoverBooking = false"  style="border: 3px solid white; border-radius: 25%;">
-                          Booking
-                      </div>
-                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverCheckIN }]" @mouseover="hoverCheckIN = true" @mouseleave="hoverCheckIN = false"  style="border: 3px solid white; border-radius: 25%;">
-                          CheckIN
-                      </div>
-                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverPayment }]" @mouseover="hoverPayment = true" @mouseleave="hoverPayment = false"  style="border: 3px solid white; border-radius: 25%;">
-                          Payment
-                      </div>
+                    <template v-if="this.$cookies.isKey('account') && this.$cookies.get('account').permission=='staff'">
+                        <router-link to="/booking" :class="center" style="text-decoration: none;">
+                          <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverBooking }]" @mouseover="hoverBooking = true" @mouseleave="hoverBooking = false"  style="border: 3px solid white; border-radius: 10px;">
+                              Booking
+                          </div>
+                        </router-link>
+                        <router-link to="/checkin" :class="center" style="text-decoration: none;">
+                          <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverCheckIN }]" @mouseover="hoverCheckIN = true" @mouseleave="hoverCheckIN = false"  style="border: 3px solid white; border-radius: 10px;">
+                              CheckIN
+                          </div>
+                        </router-link>
+                        <router-link to="/payments" :class="center" style="text-decoration: none;">
+                          <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverPayment }]" @mouseover="hoverPayment = true" @mouseleave="hoverPayment = false"  style="border: 3px solid white; border-radius: 10px;">
+                              Payment
+                          </div>
+                        </router-link>
+                        <router-link to="/VIP" :class="center" style="text-decoration: none;">
+                          <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverVIP }]" @mouseover="hoverVIP = true" @mouseleave="hoverVIP = false"  style="border: 3px solid white; border-radius: 10px;">
+                              VIP member
+                          </div>
+                        </router-link>
+                    </template>
                   </div>
                     <template v-if="this.$cookies.isKey('account')">
                         <div :class="center" >
@@ -60,6 +73,7 @@ export default {
       hoverBooking: false,
       hoverCheckIN: false,
       hoverPayment: false,
+      hoverVIP: false,
     };
   },
   methods: {
@@ -67,9 +81,8 @@ export default {
       this.$cookies.keys().forEach(cookie => this.$cookies.remove(cookie))
       alert("Logout");
       this.$router.push({path: '/user/login'})
-    }
+    },
   },
-
 };
 
         
