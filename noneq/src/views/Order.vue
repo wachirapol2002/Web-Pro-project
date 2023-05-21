@@ -158,7 +158,7 @@ export default {
                         axios.post("http://localhost:3000/order", data)
                             .then(response => {
                                 this.$router.push({ path: '/confirm', query: { table: this.table } })
-                                console.log(response.data);
+                                console.log(response.data.allsum);
                             })
                             .catch(err => {
                                 console.log(err);

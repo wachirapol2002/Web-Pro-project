@@ -33,8 +33,19 @@ router.post('/order', async (req, res, next) => {
             [sum_price, order_id]
         )
 
+        const sum_prices = await conn.query(
+            'SELECT sum(order_price) sum_pricess FROM orders WHERE table_num = ?;',
+            [table]
+        )
+        await conn.query(
+            'UPDATE tables SET total_price = ? WHERE table_num = ?;',
+            [sum_prices[0][0].sum_pricess ,table]
+        )
+
         conn.commit()
-        res.status(201).send()
+        res.status(201).json({
+            all_sum: sum_prices[0][0].sum_pricess
+        })
     } catch (err) {
         conn.rollback()
         res.status(400).json(err.toString());

@@ -6,9 +6,9 @@
         <div class="card mb-1">
           <div class="card-content p-0">
             <div class="media">
-              <div class="media-left">
+              <div class="media-left" v-for="Image in images" :key="Image.menu_id">
                 <figure class="image is-96x96 pt-3">
-                  <img :src="'http://localhost:3000' + inOrder.menu_pic" alt="Placeholder image" />
+                  <img :src="'http://localhost:3000' + Image.menu_pic" alt="Placeholder image" />
                 </figure>
               </div>
               <div class="media-content pt-2">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="fw-bold fs-5" v-for="inOrder in orders" :key="inOrder.order_id">ราคารวม: {{ inOrder.order_price }}</div>
+      <div class="fw-bold fs-5">ราคารวม: {{ sum_price }}</div>
       
       <router-link to="/tables">
         <a class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;"
@@ -55,6 +55,9 @@ export default {
       order_details: [],
       orders: [],
       table: this.$route.query.table,
+      images: [],
+      sum_price: 0,
+      
       center: {
         'd-flex': true,
         'justify-content-center': true,
@@ -76,6 +79,16 @@ export default {
       axios.get("http://localhost:3000/order")
         .then(response => {
           this.orders = response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    getimages() {
+      axios.get("http://localhost:3000/menu")
+        .then(response => {
+          this.images = response.data;
         })
         .catch(err => {
           console.log(err);
