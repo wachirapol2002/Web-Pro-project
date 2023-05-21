@@ -59,6 +59,26 @@ const routes = [
     name: 'Comfirm',
     component: () => import('../views/Confirm.vue')
   },
+  {
+    path: '/booking',
+    name: 'BookingTable',
+    component: () => import('../views/dataTable/BookingTable.vue')
+  },
+  {
+    path: '/checkin',
+    name: 'CheckINTable',
+    component: () => import('../views/dataTable/CheckINTable.vue')
+  },
+  {
+    path: '/payments',
+    name: 'PaymentTable',
+    component: () => import('../views/dataTable/PaymentTable.vue')
+  },
+  {
+    path: '/VIP',
+    name: 'VIPTable',
+    component: () => import('../views/dataTable/VIPTable.vue')
+  },
 ]
 
 const router = new VueRouter({
