@@ -24,7 +24,7 @@ router.post('/order', async (req, res, next) => {
         orders.forEach (async(order) => {
             await conn.query(
             'INSERT INTO order_details(order_id, menu_id, quantity, quantity_price) VALUES (?, ?, ?, ?)',
-            [order_id, order.menu_id, order.menu_quantity, order.menu_price]
+            [order_id, order.menu_id, order.menu_quantity, order.menu_price*order.menu_quantity]
         )
         })
 

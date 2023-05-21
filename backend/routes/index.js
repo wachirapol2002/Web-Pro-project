@@ -37,4 +37,38 @@ router.get("/menu", async function (req, res, next) {
   }
 });
 
+
+router.get("/orderdetail", async function (req, res, next) {
+  try {
+    const search = req.query.search || ''
+    let sql = 'SELECT * FROM order_details'
+    let cond = []
+
+    if (search.length > 0) {
+      sql = 'SELECT * FROM menus WHERE order_details_id = ?;'
+      cond = [`%${search}%`]
+    }
+    const [rows, fields] = await pool.query(sql, cond);
+    return res.json(rows);
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+});
+
+router.get("/order", async function (req, res, next) {
+  try {
+    const search = req.query.search || ''
+    let sql = 'SELECT * FROM orders'
+    let cond = []
+
+    if (search.length > 0) {
+      sql = 'SELECT * FROM menus WHERE order_id = ?;'
+      cond = [`%${search}%`]
+    }
+    const [rows, fields] = await pool.query(sql, cond);
+    return res.json(rows);
+  } catch (err) {
+    return res.status(500).json(err)
+  }
+});
 exports.router = router;

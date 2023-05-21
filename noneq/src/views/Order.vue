@@ -53,8 +53,8 @@
                                         x {{ product.menu_quantity }}
                                     </div>
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <input class="button me-5 fw-bold" style="text-decoration: none;"
-                                            @click="removeFromOrder(product, index)" value="Delete">
+                                        <a class="button me-5 fw-bold" style="text-decoration: none; padding: 20px 50px 20px 50px;"
+                                            @click="removeFromOrder(product, index)">Delete</a>
                                     </div>
                                 </div>
                             </div>
