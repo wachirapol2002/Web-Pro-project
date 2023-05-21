@@ -38,7 +38,9 @@
             <div class="column is-3 pt-6 pl-0 pr-5">
                 <div style="display: flex;justify-content: space-between;">
                     <span class="title mb-4 fw-bold fs-3">รายการอาหารที่สั่ง</span>
+                    <router-link :to="{ path: '/confirm', query: { table: this.tables.table_num }}" >
                     <a @click="setZero(product)" class=" mb-4 button fw-bold" style="text-decoration: none;">Check Bills</a>
+                </router-link>
                     <a @click="setZero(product)" class=" mb-4 button fw-bold" style="text-decoration: none;">Clear</a>
                 </div>
                 <div class="card mb-4">
@@ -63,7 +65,7 @@
                         <hr>
                     </div>
                     <label class="form-label fw-bold fs-5 mt-3 ms-2" v-if="showPrice">ราคารวม : {{ sum_price }} บาท</label>
-                    <input class="button is-dark mt-3 fw-bold fs-3" style="width: 100%;color: white; text-decoration: none;"
+                    <input class="button is-dark fw-bold fs-3" style="width: 100%;color: white; text-decoration: none;"
                         @click="menuConfirm()" value="Ordered">
                 </div>
             </div>
@@ -87,6 +89,7 @@ export default {
             menus: [],
             order: [],
             table: this.$route.query.table,
+            tables: {},
             sum_price: 0,
             showPrice: false,
         };
@@ -137,7 +140,7 @@ export default {
             })
             this.order = []
             this.sum_price = 0;
-            this.showPrice = !this.showPrice;
+            this.showPrice = false;
         },
 
         menuConfirm() {
@@ -170,9 +173,21 @@ export default {
                 }
             }
         },
+        
+        getTable() {
+      axios.get("http://localhost:3000/?search="+this.$route.query.table)
+        .then(response => {
+          this.tables = response.data[0];
+          this.getData()
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     },
     mounted() {
         this.getMenu();
+        this.getTable();
     },
     watch: {
         '$route'(to, from) {
