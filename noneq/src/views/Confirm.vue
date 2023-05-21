@@ -54,6 +54,7 @@ export default {
     return {
       order_details: [],
       orders: [],
+      table: this.$route.query.table,
       center: {
         'd-flex': true,
         'justify-content-center': true,

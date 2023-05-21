@@ -162,4 +162,42 @@ router.post('/table/checkin', async (req, res, next) => {
     }
 })
 
+router.post('/table/checkout', async (req, res, next) => {
+    const username = req.body.username
+    const table = req.body.table
+    const total_price = req.body.total_price
+    const conn = await pool.getConnection()
+    await conn.beginTransaction()
+    try {
+        //บันทึกเวลาออก
+        await conn.query(
+            "UPDATE checkin SET checkOut_time = current_timestamp() "+
+            "WHERE username = ? AND table_num =? AND checkOut_time IS NULL;",
+            [username, table]
+        )
+        //ออกบิล
+        await conn.query(
+            "INSERT INTO payments(username, table_num, total_price) VALUES (?, ?, ?)",
+            [username, table, total_price]
+        )
+        //clear order
+        await conn.query(
+            "DELETE FROM orders WHERE table_num = ?;",
+            [table]
+        )
+        //เปลี่ยนสถานะโต๊ะ
+        await conn.query(
+            "UPDATE tables SET total_price = 0, table_status = 'available', username = null WHERE table_num = ?;",
+            [table]
+        )
+        conn.commit()
+        res.status(200).send();
+    } catch (error) {
+        conn.rollback()
+        res.status(400).json(error.toString())
+    } finally {
+        conn.release()
+    }
+})
+
 exports.router = router

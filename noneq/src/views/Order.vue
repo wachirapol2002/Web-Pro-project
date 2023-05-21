@@ -85,10 +85,9 @@ export default {
         return {
             menus: [],
             order: [],
-            table: 1,
+            table: this.$route.query.table,
             sum_price: 0,
             showPrice: false,
-            order_id: 1,
         };
     },
     methods: {
@@ -158,13 +157,12 @@ export default {
                         console.log(data)
                         axios.post("http://localhost:3000/order", data)
                             .then(response => {
-                                this.$router.push({ path: '/confirm' })
+                                this.$router.push({ path: '/confirm', query: { table: this.table } })
                                 console.log(response.data);
                             })
                             .catch(err => {
                                 console.log(err);
                             });
-                            this.order_id++
                     } else {
                         alert('คุณยกเลิกแล้ว');
                     }
