@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="fw-bold fs-5">ราคารวม: {{ sum_price }}</div>
+      <div class="fw-bold fs-5">ราคารวม: {{ table.total_price }}</div>
       
       <router-link to="/tables">
         <a class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;"
@@ -54,10 +54,10 @@ export default {
     return {
       order_details: [],
       orders: [],
-      table: this.$route.query.table,
+      table: {},
       images: [],
       sum_price: 0,
-      
+
       center: {
         'd-flex': true,
         'justify-content-center': true,
@@ -94,14 +94,28 @@ export default {
           console.log(err);
         });
     },
-    checkout(){
+    checkout(
+      
+    ){
 
+    },
+
+    getTable() {
+      axios.get("http://localhost:3000/?search="+this.$route.query.table)
+        .then(response => {
+          this.table = response.data[0];
+          this.getData()
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
   },  
 
   mounted() {
     this.getOrderDetail();
     this.getOrder();
+    this.getTable();
   },
   
   watch: {
