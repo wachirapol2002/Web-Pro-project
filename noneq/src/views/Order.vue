@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="media">
-                                        <div class="fw-bold fs-4">
+                                        <div class="fw-bold fs-5">
                                             {{ product.menu_name }}
                                             {{ product.menu_price }} บาท
                                         </div>
@@ -38,6 +38,7 @@
             <div class="column is-3 pt-6 pl-0 pr-5">
                 <div style="display: flex;justify-content: space-between;">
                     <span class="title mb-4 fw-bold fs-3">รายการอาหารที่สั่ง</span>
+                    <a @click="setZero(product)" class=" mb-4 button fw-bold" style="text-decoration: none;">Check Bills</a>
                     <a @click="setZero(product)" class=" mb-4 button fw-bold" style="text-decoration: none;">Clear</a>
                 </div>
                 <div class="card mb-4">

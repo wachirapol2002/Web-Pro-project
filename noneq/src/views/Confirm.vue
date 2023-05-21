@@ -28,7 +28,7 @@
       </div>
       <div class="fw-bold fs-5">ราคารวม: {{ table.total_price }}</div>
       
-      <router-link to="/tables">
+      <router-link :to="{ path: '/order', query: { table: this.table.table_num }}" >
         <a class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;"
           @click="menuConfirm()">Home</a>
       </router-link>
@@ -95,7 +95,7 @@ export default {
         });
     },
     checkout(
-      
+
     ){
 
     },
