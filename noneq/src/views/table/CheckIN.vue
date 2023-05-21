@@ -16,29 +16,20 @@
                         </div>
                         <div class="form-group col-6">
                             <label class="form-label fw-bold" for="username">ผู้จอง</label>
-                            <div class="mx-3">{{username}} </div>
+                            <div class="mx-3">{{this.bookData.username}} </div>
                         </div>
                     </div>
                     <div class="row my-2">
                         <div class="form-group col-6">
                             <label class="form-label fw-bold" for="time">เวลา</label>
-                            <input class="form-control" :class="{ 'border-danger': $v.time.$error }" type="time" id="time" v-model="time">
-                            <template v-if="$v.time.$error">
-                                <p class="text-danger m-0 p-0" v-if="!$v.time.required">
-                                    time is required
-                                </p>
-                            </template>
+                            <div class="mx-3">{{this.bookData.booking_time.slice(0, 5)}} </div>
                         </div>
-                    </div>
-                    <p v-if="error" class="px-3 py-2 mb-3 alert alert-danger">
-                          {{ error }}
-                        </p>
-                    
-                    
+                    </div>  
                     <div class="row my-2">
                       <div class="form-group d-flex justify-content-center">
                           <div class="btn btn-dark btn-md mt-4 mx-2" @click="back()">Back</div>
-                          <div class="btn btn-dark btn-md mt-4 mx-2" @click="book()">Confirm</div>
+                          <div class="btn btn-danger btn-md mt-4 mx-2" @click="cancel()">Cancel</div>
+                          <div class="btn btn-success btn-md mt-4 mx-2" @click="checkin()">Check-IN</div>
                       </div>
                     </div>
                 </form>
@@ -49,15 +40,6 @@
 
 <script>
 import axios from "axios";
-import {
-  required,
-} from "vuelidate/lib/validators";
-
-function formatTime(date) {
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
-}
 
 export default {
   name: "BookingPage",
@@ -67,47 +49,63 @@ export default {
       account: this.$cookies.get('account'),
       username: this.$cookies.get('account').username,
       table: this.$route.query.table,
-      time: formatTime(new Date()),
-      error: "",
+      bookData: {
+        username: "table"+this.table,
+        booking_time: "00:00",
+      },
       center:{
-      'd-flex': true,
-      'justify-content-center':true,
-      'align-items-center':true
-    },
+        'd-flex': true,
+        'justify-content-center':true,
+        'align-items-center':true
+      },
     };
   },
-  validations: {
-    time: {
-      required: required,
-    },
+    mounted() {
+    this.getData();
   },
   methods: {
-    book() {
-      // Validate all fields
-      this.$v.$touch();
-      // เช็คว่าในฟอร์มไม่มี error
-      if (!this.$v.$invalid) {
-        const data = {
-          account: this.account,
+    getData() {
+      const data = {
           table: this.table,
-          time: this.time,
         };
-        console.log(data)
-        axios
-          .post("http://localhost:3000/table/book", data)
-          .then(() => {
-            this.$router.push({path:'/tables'})
-            alert("Updated");
-          })
-          .catch(error => {
-            console.log(error)
-            if (error.response && error.response.data && error.response.data.details && error.response.data.details[0]) {
-            this.error = error.response.data.details[0].message;
-          } else {
-            this.error = error.response.data
+      axios.post("http://localhost:3000/table/bookData",data)
+        .then(response => {
+          if(response){
+            this.bookData = response.data;
           }
-          })
-      }
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    cancel() {
+      const data = {    
+          table: this.table,
+        };
+      axios.post("http://localhost:3000/table/cancel",data)
+        .then(response => {
+          console.log(response)
+          this.$router.push({path:'/tables'})
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    checkin() {
+      const data = {
+          booking_id: this.bookData.booking_id,
+          username: this.bookData.username,
+          table: this.table,
+        };
+      axios.post("http://localhost:3000/table/checkin",data)
+        .then(response => {
+          console.log(response)
+          this.$router.push({path:'/tables'})
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     back() {
       if (this.previousRoutes.length > 0) {

@@ -18,15 +18,7 @@
     color: white;
     width:7vw;
     height: 4vw;
-}
-.available{
-    background-color: green;
-}
-.booked{
-    background-color: rgb(255, 183, 0);
-}
-.unavailable{
-    background-color: red;
+    border-radius: 10%;
 }
 
 </style>
@@ -58,7 +50,7 @@ export default {
     return {
       previousRoutes: [],
       tables: [],
-      username: '',
+      account: '',
       haveTable: false,
       center:{
         'd-flex': true,
@@ -70,10 +62,10 @@ export default {
   mounted() {
     this.getTables();
     if(this.$cookies.isKey('account')){
-        this.username = this.$cookies.get('account')
+        this.account = this.$cookies.get('account')
         this.checkhaveTable();
     }else{
-        this.username = ""
+        this.account = ""
     }
   },
   methods: {
@@ -81,7 +73,6 @@ export default {
       axios.get("http://localhost:3000")
         .then(response => {
           this.tables = response.data;
-          console.log(this.tables)
         })
         .catch(err => {
           console.log(err);
@@ -89,7 +80,7 @@ export default {
     },
     async checkhaveTable() {
         const data = {
-            username: this.$cookies.get('account').username,
+            username: this.account.username,
         }
         axios.post("http://localhost:3000/table/haveTable", data)
         .then(response => {
@@ -103,18 +94,40 @@ export default {
     selectTable(tableNum){
         if(this.$cookies.isKey('account')){
             if(this.tables[tableNum-1].table_status == 'available'){  //โต๊ะว่าง
-                if((this.haveTable == true) && this.$cookies.get('account').permission != "staff"){
-                    return alert("ขออภัย คุณมีโต๊ะอยู่แล้ว")
-                }
-                else if((this.haveTable == false) || this.$cookies.get('account').permission == "staff"){
-                    this.$router.push({path:'/tables/booking', query: { table: tableNum }})
+                if(this.account.permission == "staff"){// staff
+                    this.$router.push({path:'/tables/checkin', query: { table: tableNum }})
+                }else if(this.account.permission == "VIP"){//VIP
+                    if(this.haveTable == true){
+                        return alert("คุณมีโต๊ะอยู่แล้ว")
+                    }
+                    else if(this.haveTable == false){
+                        this.$router.push({path:'/tables/booking', query: { table: tableNum }})
+                    }
+                }else if(this.account.permission == "customer"){
+                    console.log(this.account.permission)
                 }
             }
-            else{
-                if((this.tables[tableNum-1].username == this.$cookies.get('account').username)|| this.$cookies.get('account').permission == "staff"){   //โต๊ะมีคนใช้
-                    // window.location.href = "./order.html?Table="+tableNum+"&User="+this.loginacct;
+
+            else if(this.tables[tableNum-1].table_status == 'booked'){ //ถูกจอง
+                if(this.account.permission == "staff"){ // staff
+                    this.$router.push({path:'/tables/checkin', query: { table: tableNum }})
+                }else if(this.account.permission == "VIP"){ //VIP
+                    if(this.tables[tableNum-1].username == this.account.username){//เจ้าของโต๊ะ
+                        this.$router.push({path:'/tables/checkin', query: { table: tableNum }})
+                    }
+                    else{
+                        alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
+                    }
+                }else if(this.account.permission == "customer"){
+                    console.log(this.account.permission)
                 }
-                else{
+            }
+            else if(this.tables[tableNum-1].table_status == 'unavailable'){
+                if(this.account.permission == "staff"){ // staff
+                    console.log(this.account.permission)
+                }else if(this.account.username == this.tables[tableNum-1].username){ //VIP
+                    console.log(this.account.username)
+                }else{
                     alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
                 }
             }
@@ -122,7 +135,8 @@ export default {
         else{
             alert("กรุณาลงชื่อเข้าใช้ก่อน")
         }
-    }
+    },
   },
+    
 };
 </script>

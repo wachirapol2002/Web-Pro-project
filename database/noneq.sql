@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2023 at 01:40 AM
+-- Generation Time: May 21, 2023 at 04:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -31,10 +31,10 @@ CREATE TABLE `accounts` (
   `username` varchar(20) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `password` varchar(255) NOT NULL COMMENT 'รหัสผ่าน',
   `permission` enum('staff','customer','VIP','') NOT NULL COMMENT 'ระดับการอนุญาต',
-  `firstname` varchar(100) NOT NULL COMMENT 'ชื่อ',
-  `lastname` varchar(100) NOT NULL COMMENT 'นามสกุล',
-  `email` varchar(100) NOT NULL COMMENT 'อีเมล',
-  `phone` varchar(10) NOT NULL COMMENT 'หมายเลขโทรศัพท์'
+  `firstname` varchar(100) DEFAULT NULL COMMENT 'ชื่อ',
+  `lastname` varchar(100) DEFAULT NULL COMMENT 'นามสกุล',
+  `email` varchar(100) DEFAULT NULL COMMENT 'อีเมล',
+  `phone` varchar(10) DEFAULT NULL COMMENT 'หมายเลขโทรศัพท์'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -43,7 +43,27 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`username`, `password`, `permission`, `firstname`, `lastname`, `email`, `phone`) VALUES
 ('kaka24502', '$2b$05$j.OkIufdPhjIdAfvEfob6Oh7PM1k3CUOkky3UWfdKkQR3H7Avfjbi', 'staff', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945'),
-('kaka24503', '$2b$05$u/1dC5V73bcdMbW4XRSZEuGkBOYJRVfbyNu0sKWC4AVmNVkKaov5W', 'customer', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945');
+('kaka24503', '$2b$05$u/1dC5V73bcdMbW4XRSZEuGkBOYJRVfbyNu0sKWC4AVmNVkKaov5W', 'VIP', 'Wachirapol', 'Klinkasorn', 'wachirapol2545@gmail.com', '0909209945'),
+('table1', '$2b$05$7kLvt5yn7D4YJ80RUWb4S.bpvPqgI4B08NuydaV2ywqNLPvmH6UmS', 'customer', NULL, NULL, NULL, NULL),
+('table10', '$2b$05$Axi12Iy/VKprwCmrlDfI4O/tcOU0F5mwjZ.DAxJ.INuiV0r.cW2KO', 'customer', NULL, NULL, NULL, NULL),
+('table11', '$2b$05$N03hoclYmKmCR.VR7xQloOfHJwwul2koaZ7AmvMeMMdJb371dKSBW', 'customer', NULL, NULL, NULL, NULL),
+('table12', '$2b$05$cZN7TsPImODc26VVvLDKBO9x4TtXDDZ5UhE1Rd5avlME3zTt./ff2', 'customer', NULL, NULL, NULL, NULL),
+('table13', '$2b$05$XnWIkIlS2ZCXy2cTongtm.YRjIbOcXJztxXFmtQQ2Z8KoD3q6beEO', 'customer', NULL, NULL, NULL, NULL),
+('table14', '$2b$05$aXgEqF4oDeBmNtgVujFJsOBmUs42GK9o9zzXYA5a9DMrnHEWcFzly', 'customer', NULL, NULL, NULL, NULL),
+('table15', '$2b$05$mAwfx3Qtu.4hhraYIpPW1uhYMYkyjAkhCgO2bt/tE/vUuPCjqi4Y.', 'customer', NULL, NULL, NULL, NULL),
+('table16', '$2b$05$N6dN6CSe4puJpdyT7W37TOuIQ/O2owUtyv.OaNUoFPSAB1LVXdsp.', 'customer', NULL, NULL, NULL, NULL),
+('table17', '$2b$05$3J1e3WtqXTQDkbsSDcpHPe4s3L5o1na9HUmmxMc0rx24JQt8rsFqa', 'customer', NULL, NULL, NULL, NULL),
+('table18', '$2b$05$Z9hTQTTt9PQtyNyy96D9Y.NcWOglnF6wE.EJNxcKmg.PDJz2v7sHa', 'customer', NULL, NULL, NULL, NULL),
+('table19', '$2b$05$OqnwbWI5lHoUJBeLkzioCOSdYV7D4f7UOdWYDWM0n4MK/UdwjbC5.', 'customer', NULL, NULL, NULL, NULL),
+('table2', '$2b$05$bpVeUA4byNef3ZBc2v9QI.AkTFpLPn4XTwbQj3MHcKrbpFmCZUEWO', 'customer', NULL, NULL, NULL, NULL),
+('table20', '$2b$05$udi5Fc9JRthQwsHK1tEX/OmAlfLUrKugqefsMWgQCdC6uonUap8jO', 'customer', NULL, NULL, NULL, NULL),
+('table3', '$2b$05$wwSRDRJ./0mW9JeNujIiW.VGGbNrIXEynQ4yrJXfDGJxsauzJ9MwO', 'customer', NULL, NULL, NULL, NULL),
+('table4', '$2b$05$MsQLyQ1h12TdkyNiQ1lj0uwmWlLhohviOFss/3WZ6zXi5OAGtI/kS', 'customer', NULL, NULL, NULL, NULL),
+('table5', '$2b$05$toTRTcMK3QXxUPtmQJMRyeOJ3bEkj0xmnFLDNczru.4S3o8aAZUh6', 'customer', NULL, NULL, NULL, NULL),
+('table6', '$2b$05$cA9pUffwdmFWWVPZ2oBsHOH2OVCa/ygUIGiPd.KMBsDKPT3aSslUO', 'customer', NULL, NULL, NULL, NULL),
+('table7', '$2b$05$5LuWKJJgBA225gzg2BUSNOW.tEC1yXZjG7MKq66dXk6fQndb/hOj2', 'customer', NULL, NULL, NULL, NULL),
+('table8', '$2b$05$LtVViSSgmkoXdBpKH28w9OEV1XO04Ej3CyhZ3PB1uJf.AMBdbhnZq', 'customer', NULL, NULL, NULL, NULL),
+('table9', '$2b$05$/rciDqd15jvwbcpNrFZ.5ObSmzsHhvnjuVZNMfPcqT90KIjUOjH36', 'customer', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

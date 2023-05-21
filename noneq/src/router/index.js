@@ -45,6 +45,11 @@ const routes = [
     component: () => import('../views/table/Booking.vue')
   },
   {
+    path: '/tables/checkin',
+    name: 'CheckIN',
+    component: () => import('../views/table/CheckIN.vue')
+  },
+  {
     path: '/order',
     name: 'Order',
     component: () => import('../views/Order.vue')
@@ -57,6 +62,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
