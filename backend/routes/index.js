@@ -10,8 +10,8 @@ router.get("/", async function (req, res, next) {
     let cond = []
 
     if (search.length > 0) {
-      sql = 'SELECT * FROM tables WHERE table_num = ? OR table_status ?;'
-      cond = [`%${search}%`, `%${search}%`]
+      sql = 'SELECT * FROM tables WHERE table_num = ? OR table_status =?;'
+      cond = [search, search]
     }
     const [rows, fields] = await pool.query(sql, cond);
     return res.json(rows);

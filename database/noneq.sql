@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2023 at 04:29 AM
+-- Generation Time: May 21, 2023 at 06:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -90,7 +90,8 @@ CREATE TABLE `checkin` (
   `booking_id` int(10) UNSIGNED ZEROFILL DEFAULT NULL COMMENT 'รหัสการจอง',
   `username` varchar(20) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `table_num` int(2) NOT NULL COMMENT 'หมายเลขโต๊ะ',
-  `checkIN_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาที่จอง'
+  `checkIN_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาที่checkIn',
+  `checkOut_time` timestamp NULL DEFAULT NULL COMMENT 'เวลาที่checkOut'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

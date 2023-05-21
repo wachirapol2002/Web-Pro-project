@@ -29,11 +29,16 @@
             <div class="grid">
                 <div :class="center" v-for="table in tables" :key="table.table_num">
                     <div class="tables" :class="{
+                        'bg-primary': ((table.table_status == 'unavailable') && (table.username == account.username)),
                         'bg-success': (table.table_status == 'available'),
-                        'bg-warning': (table.table_status == 'booked'),
-                        'bg-danger': (table.table_status == 'unavailable'),
+                        'bg-warning': (
+                            (table.table_status == 'booked' && table.username == account.username)
+                            || (table.table_status == 'booked' && account.permission == 'staff')
+                            ),
+                        'bg-danger': (
+                            (table.table_status == 'unavailable' && table.username != account.username) 
+                            || (table.table_status=='booked' && table.username!=account.username && account.permission != 'staff')),
                         }" @click="selectTable(table.table_num)">
-                        
                         {{table.table_num}}
                     </div>
                 </div>
@@ -50,7 +55,7 @@ export default {
     return {
       previousRoutes: [],
       tables: [],
-      account: '',
+      account: {},
       haveTable: false,
       center:{
         'd-flex': true,
@@ -65,7 +70,7 @@ export default {
         this.account = this.$cookies.get('account')
         this.checkhaveTable();
     }else{
-        this.account = ""
+        this.account = { username: "" };
     }
   },
   methods: {
