@@ -129,9 +129,9 @@ export default {
             }
             else if(this.tables[tableNum-1].table_status == 'unavailable'){
                 if(this.account.permission == "staff"){ // staff
-                    console.log(this.account.permission)
-                }else if(this.account.username == this.tables[tableNum-1].username){ //VIP
-                    console.log(this.account.username)
+                    this.$router.push({path:'/order', query: { table: tableNum }})
+                }else if(this.account.username == this.tables[tableNum-1].username){ //เจ้าของโต๊ะ
+                    this.$router.push({path:'/order', query: { table: tableNum }})
                 }else{
                     alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
                 }

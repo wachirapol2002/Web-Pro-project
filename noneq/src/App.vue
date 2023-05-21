@@ -7,13 +7,19 @@
                   <div class="d-flex">
                     <!-- logo -->
                     <router-link to="/">
-                      <div :class="center" style="border: 1px solid white; border-radius: 5%;">
+                      <div :class="center" style="border: 3px solid gray; border-radius: 50%;">
                           <img :src="require('./assets/logo.png')" style="max-height:7.5vh; width: auto; border-radius: 50%;">
                       </div>
                     </router-link>
-                    <div class="d-flex"  style="border: 1px solid white; border-radius: 5%;">
-                          <img :src="require('./assets/logo.png')" style="max-height:7.5vh; width: auto; border-radius: 50%;">
-                    </div>
+                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverBooking }]" @mouseover="hoverBooking = true" @mouseleave="hoverBooking = false"  style="border: 3px solid white; border-radius: 25%;">
+                          Booking
+                      </div>
+                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverCheckIN }]" @mouseover="hoverCheckIN = true" @mouseleave="hoverCheckIN = false"  style="border: 3px solid white; border-radius: 25%;">
+                          CheckIN
+                      </div>
+                      <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverPayment }]" @mouseover="hoverPayment = true" @mouseleave="hoverPayment = false"  style="border: 3px solid white; border-radius: 25%;">
+                          Payment
+                      </div>
                   </div>
                     <template v-if="this.$cookies.isKey('account')">
                         <div :class="center" >
@@ -51,6 +57,9 @@ export default {
           'justify-content-center':true,
           'align-items-center':true
       },
+      hoverBooking: false,
+      hoverCheckIN: false,
+      hoverPayment: false,
     };
   },
   methods: {
