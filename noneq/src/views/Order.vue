@@ -85,8 +85,10 @@ export default {
         return {
             menus: [],
             order: [],
+            table: 1,
             sum_price: 0,
             showPrice: false,
+            order_id: 1,
         };
     },
     methods: {
@@ -124,7 +126,7 @@ export default {
             }
             this.sum_price -= item.menu_price
 
-            if(this.sum_price == 0){
+            if (this.sum_price == 0) {
                 this.showPrice = !this.showPrice;
             }
         },
@@ -139,7 +141,6 @@ export default {
         },
 
         menuConfirm() {
-
             if (this.order == "") {
                 alert("กรุณาสั่งรายการอาหาร")
             }
@@ -149,35 +150,38 @@ export default {
                     if (result) {
                         alert("รายการอาหารถูกสั่งเรียบร้อย")
                         console.log('saved')
-                        this.$router.push({ path: '/confirm' })
+                        const data = {  
+                            order: this.order,
+                            table: this.table,
+                            sum_price: this.sum_price,
+                        };
+                        console.log(data)
+                        axios.post("http://localhost:3000/order", data)
+                            .then(response => {
+                                this.$router.push({ path: '/confirm' })
+                                console.log(response.data);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                            this.order_id++
                     } else {
                         alert('คุณยกเลิกแล้ว');
                     }
-
                 }
-
             }
         },
     },
     mounted() {
         this.getMenu();
     },
+    watch: {
+        '$route'(to, from) {
+            this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
+        },
+    },
 
 };
- // const data = {
-                //     order_details_id: "",
-                //     order_id: "",
-                //     menu_id: "",
-                //     quantity: 0,
-                //     quantity_price: 0,
-                // };
-                // axios.post("http://localhost:3000/order", data)
-                //     .then(response => {
-                //         console.log(response.data);
-                //     })
-                //     .catch(err => {
-                //         console.log(err);
-                //     });
 
 </script>
   

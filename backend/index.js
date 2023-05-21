@@ -22,11 +22,14 @@ app.use(cookieSession({
 const indexRouter = require('./routes/index')
 const userRouter = require('./routes/user')
 const tableRouter = require('./routes/table')
+const orderRouter = require('./routes/order')
 
 
 app.use(indexRouter.router)
 app.use(userRouter.router)
 app.use(tableRouter.router)
+app.use(orderRouter.router)
+
 
 
 app.listen(3000, () => {
