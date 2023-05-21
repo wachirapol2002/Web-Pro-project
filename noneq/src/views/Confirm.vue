@@ -34,7 +34,7 @@
       </router-link>
       <template v-if="this.$cookies.isKey('account')">
         <a class="button is-danger mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;"
-          @click="checkout()">Checkout</a>
+          @click="checkout()">เรียกพนักงานเพื่อ Checkout</a>
       </template>
 
       <hr>
@@ -94,17 +94,25 @@ export default {
           console.log(err);
         });
     },
-    checkout(
-
-    ){
-
+    checkout(){
+        const data = {
+            username: this.table.username,
+            table: this.table.table_num,
+            total_price: this.table.total_price
+        }
+        axios.post("http://localhost:3000/table/checkout", data)
+        .then(response => {
+            console.log(response)
+            this.$router.push({ path: '/tables'})
+        })
+        .catch(err => {
+            console.log(err);
+        });
     },
-
     getTable() {
       axios.get("http://localhost:3000/?search="+this.$route.query.table)
         .then(response => {
           this.table = response.data[0];
-          this.getData()
         })
         .catch(err => {
           console.log(err);

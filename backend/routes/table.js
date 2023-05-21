@@ -166,6 +166,7 @@ router.post('/table/checkout', async (req, res, next) => {
     const username = req.body.username
     const table = req.body.table
     const total_price = req.body.total_price
+    console.log(req.body)
     const conn = await pool.getConnection()
     await conn.beginTransaction()
     try {
