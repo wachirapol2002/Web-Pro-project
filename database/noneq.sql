@@ -112,14 +112,14 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`menu_id`, `menu_pic`, `menu_name`, `menu_price`, `menu_quantity`) VALUES
-(0000000001, '/static/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 50, 0),
-(0000000002, '/static/imagefood/Bacon.jpg', 'เบคอน', 50, 0),
-(0000000003, '/static/imagefood/Streakypork.jpg', 'หมูสามชั้น', 50, 0),
-(0000000004, '/static/imagefood/sirloin.jpg', 'เนื้อสันคอ', 50, 0),
-(0000000005, '/static/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 50, 0),
-(0000000006, '/static/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 50, 0),
-(0000000007, '/static/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 50, 0),
-(0000000008, '/static/imagefood/egg.jpg', 'ไข่ไก่', 50, 0);
+(0000000001, '/static/imagefood/SlicedPorkNeck.jpg', 'สันคอหมู', 150, 0),
+(0000000002, '/static/imagefood/Bacon.jpg', 'เบคอน', 150, 0),
+(0000000003, '/static/imagefood/Streakypork.jpg', 'หมูสามชั้น', 150, 0),
+(0000000004, '/static/imagefood/sirloin.jpg', 'เนื้อสันคอ', 150, 0),
+(0000000005, '/static/imagefood/Chinese cabbage.jpg', 'ผักกาดขาว', 20, 0),
+(0000000006, '/static/imagefood/Water Spinach.jpg', 'ผักบุ้ง', 20, 0),
+(0000000007, '/static/imagefood/Egg Tofu.png', 'เต้าหู้ไข่', 15, 0),
+(0000000008, '/static/imagefood/egg.jpg', 'ไข่ไก่', 10, 0);
 
 -- --------------------------------------------------------
 
