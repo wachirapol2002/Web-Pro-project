@@ -2,8 +2,16 @@
   <div id="app">
 
     <div class="container is-max-desktop p-5 ">
+<<<<<<< Updated upstream
       <div class="column pt-2 pl-0 pr-0" v-for="order in order_details" :key="order.order_price">
         <div class="card mb-1" v-for="image in filteredImages(order.menu_id)" :key="image.menu_id">
+=======
+      <div class="row mx-5">
+                        <h1>{{"โต๊ะหมายเลข "+table.table_num}}</h1>
+      </div>
+      <div class="column pt-2 pl-0 pr-0" v-for="inOrder in order_details" :key="inOrder.order_id">
+        <div class="card mb-1">
+>>>>>>> Stashed changes
           <div class="card-content p-0">
             <div class="media" >
               <div class="media-left" >
@@ -83,15 +91,19 @@ export default {
     },
 
     getOrder() {
-      axios.get("http://localhost:3000/order")
+      const data = {
+          table: this.$route.query.table
+        }
+      axios.post("http://localhost:3000/order", data)
         .then(response => {
-          this.orders = response.data;
+          this.orders = response.data.orders;
+          console.log(this.orders)
         })
         .catch(err => {
           console.log(err);
         });
     },
-    getImages() {
+    getimages() {
       axios.get("http://localhost:3000/menu")
         .then(response => {
           this.images = response.data;
@@ -127,10 +139,10 @@ export default {
   },
 
   mounted() {
-    this.getOrderDetail();
-    this.getOrder();
     this.getTable();
     this.getImages();
+    this.getOrder();
+    // this.getOrderDetail();
   },
 
   watch: {

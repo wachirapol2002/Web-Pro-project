@@ -152,6 +152,25 @@ router.get("/orderdetail", async function (req, res, next) {
   }
 });
 
+router.post('/order', async (req, res, next) => {
+  const table = req.body.table
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+      const [order_id] = await pool.query(
+          "SELECT * FROM orders JOIN order_details USING (order_id) WHERE table_num = ?;",
+          [table]
+      )
+      conn.commit()
+      res.status(200).json({orders: order_id});
+  } catch (error) {
+      conn.rollback()
+      res.status(400).json(error.toString())
+  } finally {
+      conn.release()
+  }
+})
+
 router.get("/order", async function (req, res, next) {
   try {
     const search = req.query.search || ''

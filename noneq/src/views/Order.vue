@@ -4,7 +4,11 @@
         <div class="columns">
             <div class="column is-8 pt-6">
                 <div class="container is-max-desktop">
+                    <div class="row mx-5">
+                        <h1>{{"โต๊ะหมายเลข "+table}}</h1>
+                    </div>
                     <div class="is-multiline columns is-variable is-2">
+                        
 
                         <div id="card_product" class="column is-one-quarter" v-for="product in menus"
                             :key="product.menu_id">
