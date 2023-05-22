@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-
-    <div class="container is-max-desktop p-5 ">
+    <div class="container is-max-desktop p-5 " style="min-height: 90vh;">
       <div class="row mx-5">
             <h1>{{"โต๊ะหมายเลข "+table.table_num}}</h1>
       </div>

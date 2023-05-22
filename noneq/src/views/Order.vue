@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-        <div class="columns">
+        <div class="columns" style="min-height: 90vh;">
             <div class="column is-8 pt-6">
                 <div class="container is-max-desktop">
                     <div class="row mx-5">
