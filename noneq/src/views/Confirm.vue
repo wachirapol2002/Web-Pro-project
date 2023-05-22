@@ -2,22 +2,22 @@
   <div id="app">
 
     <div class="container is-max-desktop p-5 ">
-      <div class="column pt-2 pl-0 pr-0" v-for="inOrder in order_details" :key="inOrder.order_id">
-        <div class="card mb-1">
+      <div class="column pt-2 pl-0 pr-0" v-for="order in order_details" :key="order.order_price">
+        <div class="card mb-1" v-for="image in filteredImages(order.menu_id)" :key="image.menu_id">
           <div class="card-content p-0">
-            <div class="media">
-              <div class="media-left" v-for="Image in images" :key="Image.menu_id">
+            <div class="media" >
+              <div class="media-left" >
                 <figure class="image is-96x96 pt-3">
-                  <img :src="'http://localhost:3000' + Image.menu_pic" alt="Placeholder image" />
+                  <img :src="'http://localhost:3000' + image.menu_pic" alt="Placeholder image" />
                 </figure>
               </div>
-              <div class="media-content pt-2">
-                <p class="title is-5">{{ inOrder.menu_name }}</p>
+              <div class="media-content pt-3 fw-bold fs-5">
+                {{ image.menu_name }}
                 <div style="display: flex;justify-content: space-between;">
                   <div>
                     <div class="fw-bold fs-5">
-                      x {{ inOrder.quantity }} <br>
-                      {{ inOrder.quantity_price }} บาท
+                      x {{ order.quantity }} <br>
+                      {{ order.quantity_price }} บาท
                     </div>
                   </div>
                 </div>
@@ -26,10 +26,11 @@
           </div>
         </div>
       </div>
-      <div class="fw-bold fs-5">ราคารวม: {{ table.total_price }}</div>
-      
-      <router-link :to="{ path: '/order', query: { table: this.table.table_num }}" >
-        <div class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;">สั่งอาหารเพิ่ม</div>
+      <div class="fw-bold fs-5">ราคารวม: {{ table.total_price }} บาท</div>
+
+      <router-link :to="{ path: '/order', query: { table: this.table.table_num } }">
+        <div class="button is-dark mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;">
+          สั่งอาหารเพิ่ม</div>
       </router-link>
       <template v-if="this.$cookies.isKey('account')">
         <div class="button is-danger mt-3 fw-bold fs-5" style="width: 100%;color: white; text-decoration: none;"
@@ -55,6 +56,7 @@ export default {
       orders: [],
       table: {},
       images: [],
+
       sum_price: 0,
 
       center: {
@@ -65,6 +67,11 @@ export default {
     };
   },
   methods: {
+
+    filteredImages(menuId) {
+      return this.images.filter((image) => image.menu_id === menuId);
+    },
+
     getOrderDetail() {
       axios.get("http://localhost:3000/orderdetail")
         .then(response => {
@@ -74,6 +81,7 @@ export default {
           console.log(err);
         });
     },
+
     getOrder() {
       axios.get("http://localhost:3000/order")
         .then(response => {
@@ -83,8 +91,7 @@ export default {
           console.log(err);
         });
     },
-
-    getimages() {
+    getImages() {
       axios.get("http://localhost:3000/menu")
         .then(response => {
           this.images = response.data;
@@ -93,23 +100,23 @@ export default {
           console.log(err);
         });
     },
-    checkout(){
-        const data = {
-            username: this.table.username,
-            table: this.table.table_num,
-            total_price: this.table.total_price
-        }
-        axios.post("http://localhost:3000/table/checkout", data)
+    checkout() {
+      const data = {
+        username: this.table.username,
+        table: this.table.table_num,
+        total_price: this.table.total_price
+      }
+      axios.post("http://localhost:3000/table/checkout", data)
         .then(response => {
-            console.log(response)
-            this.$router.push({ path: '/tables'})
+          console.log(response)
+          this.$router.push({ path: '/tables' })
         })
         .catch(err => {
-            console.log(err);
+          console.log(err);
         });
     },
     getTable() {
-      axios.get("http://localhost:3000/?search="+this.$route.query.table)
+      axios.get("http://localhost:3000/?search=" + this.$route.query.table)
         .then(response => {
           this.table = response.data[0];
         })
@@ -117,14 +124,15 @@ export default {
           console.log(err);
         });
     },
-  },  
+  },
 
   mounted() {
     this.getOrderDetail();
     this.getOrder();
     this.getTable();
+    this.getImages();
   },
-  
+
   watch: {
     '$route'(to, from) {
       this.previousRoutes.push(from)
