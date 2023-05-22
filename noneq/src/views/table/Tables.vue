@@ -109,7 +109,7 @@ export default {
                         this.$router.push({path:'/tables/booking', query: { table: tableNum }})
                     }
                 }else if(this.account.permission == "customer"){
-                    console.log(this.account.permission)
+                    alert("สมัครสมาชิกเพื่อจองโต๊ะ")
                 }
             }
 
@@ -124,7 +124,7 @@ export default {
                         alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
                     }
                 }else if(this.account.permission == "customer"){
-                    console.log(this.account.permission)
+                    alert("ขออภัย โต๊ะนี้ไม่พร้อมใช้งาน")
                 }
             }
             else if(this.tables[tableNum-1].table_status == 'unavailable'){

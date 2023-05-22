@@ -2,6 +2,7 @@ const express = require("express");
 const pool = require("../config");
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
+const upload = require("../multer");
 
 router = express.Router();
 
@@ -189,6 +190,60 @@ router.post('/user/login', async (req, res, next) => {
     } catch (error) {
         conn.rollback()
         res.status(400).json(error.toString())
+    } finally {
+        conn.release()
+    }
+})
+
+//สมัคร VIP
+router.post("/registerVIP", upload.single('image'), async function (req, res, next) {
+    const file = req.file;
+    const username = req.body.username;
+    
+    const conn = await pool.getConnection()
+    await conn.beginTransaction();
+    try {
+    if (!file) {
+        throw new Error('Please upload a file')
+    }
+    await conn.query(
+        "INSERT INTO slip_image(username, file_path) VALUES(?, ?);",
+        [username, file.path.substr(6)])
+
+    await conn.commit()
+        res.status(200).send()
+    } catch (err) {
+        await conn.rollback();
+        res.status(400).json(err.toString())
+    } finally {
+    conn.release();
+    }
+});
+
+//ยืนยันVIP
+router.post('/registerVIP/confirm', async (req, res, next) => {
+    const username = req.body.username
+    const image_id = req.body.image_id
+    const conn = await pool.getConnection()
+    await conn.beginTransaction()
+    try {
+        await conn.query(
+            'UPDATE accounts SET permission="VIP" WHERE username=?;',
+            [username]
+        )
+        await conn.query(
+            'UPDATE slip_image SET confirm="YES" WHERE image_id=?;',
+            [image_id]
+        )
+        await conn.query(
+            'INSERT INTO vip(username, expire_date) VALUES (?, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 MONTH))',
+            [username]
+        )
+        conn.commit()
+        res.status(201).send()
+    } catch (err) {
+        conn.rollback()
+        res.status(400).json(err.toString());
     } finally {
         conn.release()
     }

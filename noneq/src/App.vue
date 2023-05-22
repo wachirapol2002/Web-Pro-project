@@ -32,12 +32,30 @@
                               VIP member
                           </div>
                         </router-link>
+                        <router-link to="/register" :class="center" style="text-decoration: none;">
+                          <div class="text-light ml-3 px-2" :class="[center, { 'bg-secondary': hoverRegister }]" @mouseover="hoverRegister = true" @mouseleave="hoverRegister = false"  style="border: 3px solid white; border-radius: 10px;">
+                              VIP register
+                          </div>
+                        </router-link>
+                    </template>
+                    <template v-if="this.$cookies.isKey('account') && this.$cookies.get('account').permission=='customer'">
+                        <router-link to="/registerVIP" :class="center" style="text-decoration: none;">
+                          <div class="btn btn-dark ml-3 px-2" :class="[center, { 'bg-danger': hoverRegister }]" @mouseover="hoverRegister = true" @mouseleave="hoverRegister = false"  style="border: 3px solid white; border-radius: 10px;">
+                              สมัครสมาชิกเพื่อจองโต๊ะ 500 บาท
+                          </div>
+                        </router-link>
+                    </template>
+                    <template v-if="this.$cookies.isKey('account') && this.$cookies.get('account').permission=='VIP'">  
+                          <div class="bg-warning ml-3 px-2" :class="center"  style="border: 3px solid white; border-radius: 10px;">
+                              คุณเป็นสมาชิกของทางร้านสามารถจองโต๊ะได้
+                          </div>
                     </template>
                   </div>
                     <template v-if="this.$cookies.isKey('account')">
                         <div :class="center" >
                             <router-link to="/user/profile" class="d-flex" :class="center" style="text-decoration: none;">
                               <div class="bi bi-person text-light mx-3" style="font-size: 2rem;"></div>
+                              <div class=' fw-bold fs-8 mr-4 text-white' :class="center">{{this.$cookies.get('account').permission}}</div>
                               <div class=' fw-bold fs-8 mx-1 text-white' :class="center">{{this.$cookies.get('account').username}}</div>
                             </router-link>
                             <button type="button" class="btn btn-danger btn-sm mx-2" @click.stop="logout()">Logout</button>
@@ -74,6 +92,7 @@ export default {
       hoverCheckIN: false,
       hoverPayment: false,
       hoverVIP: false,
+      hoverRegister: false,
     };
   },
   methods: {

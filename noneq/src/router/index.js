@@ -79,6 +79,16 @@ const routes = [
     name: 'VIPTable',
     component: () => import('../views/dataTable/VIPTable.vue')
   },
+  {
+    path: '/register',
+    name: 'RegisterTable',
+    component: () => import('../views/dataTable/RegisterTable.vue')
+  },
+  {
+    path: '/registerVIP',
+    name: 'RegisterVIP',
+    component: () => import('../views/registerVIP.vue')
+  },
 ]
 
 const router = new VueRouter({

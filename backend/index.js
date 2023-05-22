@@ -7,7 +7,7 @@ const cors = require('cors')
 app.use(cors())
 
 // Statics
-app.use('/static/imagefood', express.static(path.join(__dirname, 'static/imagefood')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 

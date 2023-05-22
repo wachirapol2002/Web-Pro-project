@@ -40,7 +40,12 @@
                             <label class="form-label fw-bold" for="permission">Permission</label>
                             <div class="mx-3">{{permission}} </div>
                         </div>
+                        <div class="form-group col-6" v-if="this.$cookies.get('account').permission=='VIP'">
+                            <label class="form-label fw-bold" for="permission">expire</label>
+                            <div class="mx-3">{{formatTime(expire_date.expire_date)}} </div>
+                        </div>
                     </div>
+                    
 
                     <div class="row my-2">
                         <div class="form-group d-flex justify-content-center">
@@ -58,18 +63,21 @@
 </template>
 
 <script>
-
+import dayjs from 'dayjs'
+import axios from "axios";
 export default {
   name: "ProfilePage",
   data() {
     return {
     previousRoutes: [],
+    account: { username: "" },
     username: this.$cookies.get('account').username,
     firstname: this.$cookies.get('account').firstname,
     lastname: this.$cookies.get('account').lastname,
     email: this.$cookies.get('account').email,
     phone: this.$cookies.get('account').phone,
     permission: this.$cookies.get('account').permission,
+    expire_date: null,
     center:{
     'd-flex': true,
     'justify-content-center':true,
@@ -86,11 +94,34 @@ export default {
             this.$router.go(-1)
         }
     },
+    expire(){
+        axios.get("http://localhost:3000/VIP/"+this.$cookies.get('account').username)
+        .then(response => {
+        console.log(response.data)
+          this.expire_date = response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    formatTime(time) {
+      return dayjs(time).format('YYYY-MM-DD HH:mm:ss');
+    },
   },
   watch: {
     '$route'(to, from) {
         this.previousRoutes.push(from) // เมื่อมีการเปลี่ยนเส้นทางใหม่ ให้เก็บเส้นทางก่อนหน้าลงในอาร์เรย์
     },
+  },
+  mounted() {
+    if(this.$cookies.isKey('account')){
+        this.account = this.$cookies.get('account')
+        if(this.$cookies.get('account').permission == "VIP"){
+            this.expire()
+        }
+    }else{
+        this.account = { username: "" };
+    }
   },
     
 };

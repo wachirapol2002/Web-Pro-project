@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2023 at 06:08 PM
+-- Generation Time: May 22, 2023 at 12:47 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -166,6 +166,20 @@ CREATE TABLE `payments` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `slip_image`
+--
+
+CREATE TABLE `slip_image` (
+  `image_id` int(11) NOT NULL COMMENT 'หมายเลขภาพ',
+  `username` varchar(20) NOT NULL COMMENT 'ชื่อผู้ใช้',
+  `file_path` varchar(200) NOT NULL COMMENT 'ที่อยู่ภาพ',
+  `upload_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'วันที่upload',
+  `confirm` varchar(5) NOT NULL DEFAULT 'NO' COMMENT 'ยืนยันVIP'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tables`
 --
 
@@ -271,6 +285,13 @@ ALTER TABLE `payments`
   ADD KEY `payments_tables` (`table_num`);
 
 --
+-- Indexes for table `slip_image`
+--
+ALTER TABLE `slip_image`
+  ADD PRIMARY KEY (`image_id`),
+  ADD KEY `slip_image` (`username`);
+
+--
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
@@ -325,6 +346,12 @@ ALTER TABLE `payments`
   MODIFY `payment_id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'รหัสการจ่ายเงิน';
 
 --
+-- AUTO_INCREMENT for table `slip_image`
+--
+ALTER TABLE `slip_image`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'หมายเลขภาพ';
+
+--
 -- AUTO_INCREMENT for table `vip`
 --
 ALTER TABLE `vip`
@@ -368,6 +395,12 @@ ALTER TABLE `order_details`
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_account` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `payments_tables` FOREIGN KEY (`table_num`) REFERENCES `tables` (`table_num`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `slip_image`
+--
+ALTER TABLE `slip_image`
+  ADD CONSTRAINT `slip_image` FOREIGN KEY (`username`) REFERENCES `accounts` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tables`

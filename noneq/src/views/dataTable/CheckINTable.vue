@@ -51,7 +51,6 @@ export default {
     this.getData();
     if(this.$cookies.isKey('account')){
         this.account = this.$cookies.get('account')
-        this.checkhaveTable();
     }else{
         this.account = { username: "" };
     }
