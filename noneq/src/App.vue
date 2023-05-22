@@ -41,13 +41,13 @@
                     <template v-if="this.$cookies.isKey('account') && this.$cookies.get('account').permission=='customer'">
                         <router-link to="/registerVIP" :class="center" style="text-decoration: none;">
                           <div class="btn btn-dark ml-3 px-2" :class="[center, { 'bg-danger': hoverRegister }]" @mouseover="hoverRegister = true" @mouseleave="hoverRegister = false"  style="border: 3px solid white; border-radius: 10px;">
-                              สมัครสมาชิกเพื่อจองโต๊ะ 500 บาท
+                              สมัครสมาชิกรับสิทธิ์พิเศษ 500 บาท
                           </div>
                         </router-link>
                     </template>
                     <template v-if="this.$cookies.isKey('account') && this.$cookies.get('account').permission=='VIP'">  
                           <div class="bg-warning ml-3 px-2" :class="center"  style="border: 3px solid white; border-radius: 10px;">
-                              คุณเป็นสมาชิกของทางร้านสามารถจองโต๊ะได้
+                              คุณเป็นสมาชิกของทางร้านสามารถจองโต๊ะได้ และลดราคา 10 %
                           </div>
                     </template>
                   </div>

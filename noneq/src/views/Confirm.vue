@@ -2,16 +2,12 @@
   <div id="app">
 
     <div class="container is-max-desktop p-5 ">
-<<<<<<< Updated upstream
-      <div class="column pt-2 pl-0 pr-0" v-for="order in order_details" :key="order.order_price">
-        <div class="card mb-1" v-for="image in filteredImages(order.menu_id)" :key="image.menu_id">
-=======
       <div class="row mx-5">
-                        <h1>{{"โต๊ะหมายเลข "+table.table_num}}</h1>
+            <h1>{{"โต๊ะหมายเลข "+table.table_num}}</h1>
       </div>
-      <div class="column pt-2 pl-0 pr-0" v-for="inOrder in order_details" :key="inOrder.order_id">
-        <div class="card mb-1">
->>>>>>> Stashed changes
+
+      <div class="column pt-2 pl-0 pr-0" v-for="order in orders" :key="order">
+        <div class="card mb-1" v-for="image in filteredImages(order.menu_id)" :key="image.menu_id">
           <div class="card-content p-0">
             <div class="media" >
               <div class="media-left" >
@@ -60,18 +56,15 @@ export default {
   name: "ConfirmPage",
   data() {
     return {
-      order_details: [],
       orders: [],
       table: {},
       images: [],
-
-      sum_price: 0,
-
       center: {
         'd-flex': true,
         'justify-content-center': true,
         'align-items-center': true
       },
+      account: {username: ""},
     };
   },
   methods: {
@@ -80,30 +73,19 @@ export default {
       return this.images.filter((image) => image.menu_id === menuId);
     },
 
-    getOrderDetail() {
-      axios.get("http://localhost:3000/orderdetail")
-        .then(response => {
-          this.order_details = response.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-
     getOrder() {
       const data = {
           table: this.$route.query.table
         }
-      axios.post("http://localhost:3000/order", data)
+      axios.post("http://localhost:3000/tableOrder", data)
         .then(response => {
           this.orders = response.data.orders;
-          console.log(this.orders)
         })
         .catch(err => {
           console.log(err);
         });
     },
-    getimages() {
+    getImages() {
       axios.get("http://localhost:3000/menu")
         .then(response => {
           this.images = response.data;
@@ -139,12 +121,15 @@ export default {
   },
 
   mounted() {
+    if(this.$cookies.isKey('account')){
+        this.account = this.$cookies.get('account')
+    }else{
+        this.account = { username: "" };
+    }
     this.getTable();
-    this.getImages();
     this.getOrder();
-    // this.getOrderDetail();
+    this.getImages();
   },
-
   watch: {
     '$route'(to, from) {
       this.previousRoutes.push(from)

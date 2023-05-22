@@ -73,6 +73,7 @@ export default {
         axios.post("http://localhost:3000/registerVIP/confirm",data)
         .then(response => {
           this.registers = response.data;
+          window.location.reload();
         })
         .catch(err => {
           console.log(err);

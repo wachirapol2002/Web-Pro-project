@@ -152,8 +152,9 @@ router.get("/orderdetail", async function (req, res, next) {
   }
 });
 
-router.post('/order', async (req, res, next) => {
+router.post('/tableOrder', async (req, res, next) => {
   const table = req.body.table
+  console.log(req.body.table)
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {

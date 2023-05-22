@@ -165,11 +165,20 @@ router.post('/table/checkin', async (req, res, next) => {
 router.post('/table/checkout', async (req, res, next) => {
     const username = req.body.username
     const table = req.body.table
-    const total_price = req.body.total_price
+    let total_price = req.body.total_price
     console.log(req.body)
     const conn = await pool.getConnection()
     await conn.beginTransaction()
     try {
+        const [accounts] = await conn.query(
+            'SELECT * FROM accounts WHERE username=?', 
+            [username]
+        )
+        const account = accounts[0]
+        if(account.permission == "VIP"){
+            total_price = Math.floor((total_price*90)/100)
+        }
+        
         //บันทึกเวลาออก
         await conn.query(
             "UPDATE checkin SET checkOut_time = current_timestamp() "+

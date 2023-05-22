@@ -249,4 +249,28 @@ router.post('/registerVIP/confirm', async (req, res, next) => {
     }
 })
 
+//ถอนVIP
+router.post('/VIP/retire', async (req, res, next) => {
+    const username = req.body.username
+    const conn = await pool.getConnection()
+    await conn.beginTransaction()
+    try {
+        await conn.query(
+            'UPDATE accounts SET permission="customer" WHERE username=?;',
+            [username]
+        )
+        await conn.query(
+            "DELETE FROM vip WHERE username = ?;",
+            [username]
+        )
+        conn.commit()
+        res.status(201).send()
+    } catch (err) {
+        conn.rollback()
+        res.status(400).json(err.toString());
+    } finally {
+        conn.release()
+    }
+})
+
 exports.router = router

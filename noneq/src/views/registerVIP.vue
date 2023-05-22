@@ -6,8 +6,10 @@
                 <img :src="require('@/assets/promptpay.png')" style="height: 300px;">
             </div>
             <section class="hero" :class="center">
-            <div class="hero-body">
+            <div class="hero-body" >
                 <p class="title">ค่าธรรมเนียมสมัครสมาชิกกับทางร้าน 500 บาท</p>
+                <p class="h3">-จองโต๊ะไม่ต้องรอหน้าร้าน</p>
+                <p class="h3">-ลดราคาเมื่อชำระเงิน 10%</p>
             </div>
             </section>
             <section class="container" :class="center">

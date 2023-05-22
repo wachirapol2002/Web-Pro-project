@@ -5,8 +5,9 @@
             <div class="column is-8 pt-6">
                 <div class="container is-max-desktop">
                     <div class="row mx-5">
-                        <h1>{{"โต๊ะหมายเลข "+table}}</h1>
+                        <h1>{{"โต๊ะหมายเลข "+table}} {{"Username:"+this.tables.username}}</h1>
                     </div>
+                    
                     <div class="is-multiline columns is-variable is-2">
                         
 
@@ -93,9 +94,10 @@ export default {
             menus: [],
             order: [],
             table: this.$route.query.table,
-            tables: {},
+            tables: {username: ""},
             sum_price: 0,
             showPrice: false,
+            account: {username: ""},
         };
     },
     methods: {
@@ -182,7 +184,6 @@ export default {
       axios.get("http://localhost:3000/?search="+this.$route.query.table)
         .then(response => {
           this.tables = response.data[0];
-          this.getData()
         })
         .catch(err => {
           console.log(err);
@@ -190,6 +191,11 @@ export default {
     },
     },
     mounted() {
+        if(this.$cookies.isKey('account')){
+            this.account = this.$cookies.get('account')
+        }else{
+            this.account = { username: "" };
+        }
         this.getMenu();
         this.getTable();
     },

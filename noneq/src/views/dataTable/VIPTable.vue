@@ -11,6 +11,8 @@
                         <th scope="col">#</th>
                         <th scope="col">ชื่อผู้ใช้</th>
                         <th scope="col">expire_date</th>
+                        <th scope="col">สถานะ</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,6 +20,9 @@
                         <th scope="row">{{index+1}}</th>
                         <td>{{member.username}}</td>
                         <td>{{formatTime(member.expire_date)}}</td>
+                        <td v-if="(new Date(formatTime(member.expire_date))< new Date())">หมดอายุ</td>
+                        <td v-else>ยังไม่หมดอายุ</td>
+                        <td><div class="btn btn-danger" @click="retire(member.username)">ถอนสิทธิ์</div></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,6 +60,19 @@ export default {
       axios.get("http://localhost:3000/VIP")
         .then(response => {
           this.members = response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    retire(username) {
+        const data = {
+          username: username,
+        };
+        axios.post("http://localhost:3000/VIP/retire",data)
+        .then(response => {
+          this.registers = response.data;
+          window.location.reload();
         })
         .catch(err => {
           console.log(err);
