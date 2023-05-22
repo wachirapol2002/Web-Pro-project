@@ -214,7 +214,6 @@ export default {
             alert("Sign up Success");
           })
           .catch((err) => {
-            console.log(err)
             alert(err.response.data.details.message)
           });
       }

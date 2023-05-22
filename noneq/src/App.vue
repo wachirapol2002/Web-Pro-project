@@ -71,8 +71,8 @@
                     </template>
             </div>
     </nav>
-    
     <router-view :key="$route.fullPath" />
+    <footer class="bg-dark" style="height: 10vh;"></footer>
   </div>
 </template>
 

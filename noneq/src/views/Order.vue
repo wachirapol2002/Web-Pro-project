@@ -158,17 +158,15 @@ export default {
                 if (result) {
                     if (result) {
                         alert("รายการอาหารถูกสั่งเรียบร้อย")
-                        console.log('saved')
                         const data = {  
                             order: this.order,
                             table: this.table,
                             sum_price: this.sum_price,
                         };
-                        console.log(data)
                         axios.post("http://localhost:3000/order", data)
                             .then(response => {
                                 this.$router.push({ path: '/confirm', query: { table: this.table } })
-                                console.log(response.data.all_sum);
+                                console.log(response);
                             })
                             .catch(err => {
                                 console.log(err);

@@ -97,7 +97,6 @@ export default {
     expire(){
         axios.get("http://localhost:3000/VIP/"+this.$cookies.get('account').username)
         .then(response => {
-        console.log(response.data)
           this.expire_date = response.data;
         })
         .catch(err => {

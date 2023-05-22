@@ -92,7 +92,6 @@ export default {
           table: this.table,
           time: this.time,
         };
-        console.log(data)
         axios
           .post("http://localhost:3000/table/book", data)
           .then(() => {

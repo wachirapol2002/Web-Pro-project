@@ -90,7 +90,6 @@ export default {
         axios.post("http://localhost:3000/table/haveTable", data)
         .then(response => {
             this.haveTable = response.data.result
-            console.log(this.haveTable)
         })
         .catch(err => {
             console.log(err);

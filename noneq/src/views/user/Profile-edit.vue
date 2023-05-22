@@ -144,7 +144,6 @@ export default {
           email: this.email,
           phone: this.phone,
         };
-        console.log(data)
         axios
           .post("http://localhost:3000/user/edit", data)
           .then((res) => {
@@ -161,7 +160,6 @@ export default {
             alert("Updated");
           })
           .catch((err) => {
-            console.log(err)
             alert(err.response.data.details.message)
           });
       }
