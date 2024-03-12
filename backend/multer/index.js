@@ -3,7 +3,6 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 require("dotenv").config();
-const path = require('path');
 const { NodeHttpHandler } = require('@smithy/node-http-handler')
 
 const s3 = new AWS.S3({
@@ -23,9 +22,9 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'noneq-01',
-    acl: 'private', // Set the access control level
+    acl: 'public-read', // Set the access control level
     key: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));; // Set the file name
+      cb(null, file.fieldname + '-' + Date.now());; // Set the file name
     },
   }),
 });

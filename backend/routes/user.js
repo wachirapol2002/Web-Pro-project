@@ -208,7 +208,7 @@ router.post("/registerVIP", upload.single('image'), async function (req, res, ne
     }
     await conn.query(
         "INSERT INTO slip_image(username, file_path) VALUES(?, ?);",
-        [username, file.path.substr(6)])
+        [username, file])
 
     await conn.commit()
         res.status(200).json({ imageUrl: req.file.location })

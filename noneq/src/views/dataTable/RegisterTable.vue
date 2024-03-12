@@ -19,11 +19,11 @@
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ register.username }}</td>
             <td>
-              <img
+              <!-- <img
                 :src="'http://44.206.165.83:3000/static' + register.file_path"
                 alt="Placeholder image"
                 style="max-width: 100px"
-              />
+              /> -->
             </td>
             <td>{{ formatTime(register.upload_date) }}</td>
             <td v-if="register.confirm == 'NO'">
