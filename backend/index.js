@@ -33,5 +33,5 @@ app.use(orderRouter.router)
 
 
 app.listen(3000, () => {
-  console.log(`Example app listening at http://localhost:3000`)
+  console.log(`Example app listening at http://44.206.165.83:3000`)
 })
