@@ -197,6 +197,8 @@ router.post('/user/login', async (req, res, next) => {
 
 //สมัคร VIP
 router.post("/registerVIP", upload.single('image'), async function (req, res, next) {
+    console.log(req)
+    console.log(req.file)
     const file = req.file;
     const username = req.body.username;
     
