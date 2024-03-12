@@ -79,7 +79,7 @@ router.post('/table/book', alreadyTable, async (req, res, next) => {
         selectedTime.setHours(hours);
         selectedTime.setMinutes(minutes);
         if (selectedTime < currentTime) {
-            throw new Joi.ValidationError('in the past')
+            throw new Joi.ValidationError('in the past' +new Date())
         }
         return value;
     }

@@ -189,7 +189,7 @@ router.post('/user/login', async (req, res, next) => {
         res.status(200).json({'account': account})
     } catch (error) {
         conn.rollback()
-        res.status(400).json(error.toString())
+        res.status(403).json(error.toString())
     } finally {
         conn.release()
     }
