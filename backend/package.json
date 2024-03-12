@@ -5,6 +5,7 @@
     "serve": "nodemon index.js"
   },
   "dependencies": {
+    "@aws-sdk/lib-storage": "^3.532.0",
     "@smithy/node-http-handler": "^2.4.3",
     "aws-sdk": "^2.1576.0",
     "bcrypt": "^5.1.0",

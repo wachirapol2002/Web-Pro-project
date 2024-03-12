@@ -211,7 +211,7 @@ router.post("/registerVIP", upload.single('image'), async function (req, res, ne
         [username, file.path.substr(6)])
 
     await conn.commit()
-        res.status(200).send()
+        res.status(200).json({ imageUrl: req.file.location })
     } catch (err) {
         await conn.rollback();
         res.status(400).json(err.toString())
