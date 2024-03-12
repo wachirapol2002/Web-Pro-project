@@ -20,12 +20,7 @@
             <td>{{ register.username }}</td>
             <td>
               <img
-                :src="
-                  'https://noneq-01.s3.amazonaws.com/' +
-                  '/' +
-                  register.file_path
-                "
-                alt="Placeholder image"
+                :src="'https://noneq-01.s3.amazonaws.com/' + register.file_path"
                 style="max-width: 100px"
               />
             </td>
