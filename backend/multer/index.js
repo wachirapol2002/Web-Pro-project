@@ -9,13 +9,13 @@ const s3 = new AWS.S3({
   credentials: {
     accessKeyId: 'ASIA6GBMBEM5J5IR2TE3',
     secretAccessKey: 'hYT2RhB2Hpr6mOawes65sfTkP/SkZO8w74+ttNBs',
-    // sessionToken: 'FwoGZXIvYXdzEE8aDCe/5TRQBmt6mSVzoCLFAV4LCPIJbQho0ZknDyA7pcB94rZwKG2n8y1dYL+5yHO10vvE7X+BNeW5yMOuqXMHFIyaqunvVlzS5Alt9sQavkESPsR4WufTWnTVY4gEgbndiw13dHrXCSLg7LOxo0JjDaW/mr8OhOQTTGR6KQA72jaleZOjN2ypRMbnZV3+uHA09dpORY7PaOvsElWyqAmR+bM+JFj/d+ncBby6Tme3aU08ijTgHOjPg+bLKSrHngE463C9iyNhJUQid1Cv/WiXKwxw+1lcKK64wa8GMi3nVPIhmaI7jYk2Adiw/ftOFYG+xzJRDWIVcTDPQ9kb2qGASd7sHyz0N9WLdHE='
+    sessionToken: 'FwoGZXIvYXdzEE8aDCe/5TRQBmt6mSVzoCLFAV4LCPIJbQho0ZknDyA7pcB94rZwKG2n8y1dYL+5yHO10vvE7X+BNeW5yMOuqXMHFIyaqunvVlzS5Alt9sQavkESPsR4WufTWnTVY4gEgbndiw13dHrXCSLg7LOxo0JjDaW/mr8OhOQTTGR6KQA72jaleZOjN2ypRMbnZV3+uHA09dpORY7PaOvsElWyqAmR+bM+JFj/d+ncBby6Tme3aU08ijTgHOjPg+bLKSrHngE463C9iyNhJUQid1Cv/WiXKwxw+1lcKK64wa8GMi3nVPIhmaI7jYk2Adiw/ftOFYG+xzJRDWIVcTDPQ9kb2qGASd7sHyz0N9WLdHE='
   },
   region: 'us-east-1',
-  // requestHandler: new NodeHttpHandler({
-  //   requestTimeout: 10 * 1000,
-  //   connectionTimeout: 10 * 1000,
-  // }),
+  requestHandler: new NodeHttpHandler({
+    requestTimeout: 10 * 1000,
+    connectionTimeout: 10 * 1000,
+  }),
 })
 
 const upload = multer({
@@ -24,7 +24,7 @@ const upload = multer({
     bucket: 'noneq-01',
     acl: 'public-read', // Set the access control level
     key: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Set the file name
+      cb(null, Date.now().toString() + '-' + file.originalname);; // Set the file name
     },
   }),
 });
