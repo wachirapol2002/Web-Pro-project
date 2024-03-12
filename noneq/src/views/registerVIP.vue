@@ -98,7 +98,10 @@ export default {
           console.log(response);
         })
         .catch((error) => {
-          this.error = error.response.data;
+          console.error("Error during API request:", error);
+          this.error = error.response
+            ? error.response.data
+            : "An error occurred.";
         });
     },
     back() {
