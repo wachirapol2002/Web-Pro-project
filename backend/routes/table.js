@@ -145,7 +145,7 @@ router.post('/table/checkin', async (req, res, next) => {
     await conn.beginTransaction()
     try {
         await conn.query(
-            "INSERT INTO checkIN(booking_id, username, table_num) VALUES (?, ?, ?)",
+            "INSERT INTO checkin(booking_id, username, table_num) VALUES (?, ?, ?)",
             [booking_id, username, table]
         )
         await conn.query(
