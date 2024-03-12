@@ -25,7 +25,7 @@ const upload = multer({
     bucket: 'noneq-01',
     acl: 'private', // Set the access control level
     key: function (req, file, cb) {
-      cb(null, Date.now().toString() + '-' + file.fieldname);; // Set the file name
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));; // Set the file name
     },
   }),
 });
