@@ -19,11 +19,11 @@
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ register.username }}</td>
             <td>
-              {{ register.file_path }}
-              <!-- <img
+              <img
                 :src="'https://noneq-01.s3.amazonaws.com/' + register.file_path"
+                alt="Placeholder image"
                 style="max-width: 100px"
-              /> -->
+              />
             </td>
             <td>{{ formatTime(register.upload_date) }}</td>
             <td v-if="register.confirm == 'NO'">
