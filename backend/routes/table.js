@@ -72,27 +72,27 @@ const alreadyTable = async (req, res, next) => {
 
 //book
 router.post('/table/book', alreadyTable, async (req, res, next) => {
-    const now = (value) => {
-        const currentTime = new Date();
-        const [hours, minutes] = value.split(':');
-        const selectedTime = new Date();
-        selectedTime.setHours(hours);
-        selectedTime.setMinutes(minutes);
-        if (selectedTime < currentTime) {
-            throw new Joi.ValidationError('in the past' +new Date())
-        }
-        return value;
-    }
-    const bookSchema = Joi.object({
-        account: Joi.object().required(),
-        table: Joi.string().required(),
-        time: Joi.string().regex(/^\d{2}:\d{2}$/).custom(now),
-    })
-    try {
-        await bookSchema.validateAsync(req.body, { abortEarly: false })
-    } catch (err) {
-        return res.status(400).send(err)
-    }
+    // const now = (value) => {
+    //     const currentTime = new Date();
+    //     const [hours, minutes] = value.split(':');
+    //     const selectedTime = new Date();
+    //     selectedTime.setHours(hours);
+    //     selectedTime.setMinutes(minutes);
+    //     if (selectedTime < currentTime) {
+    //         throw new Joi.ValidationError('in the past')
+    //     }
+    //     return value;
+    // }
+    // const bookSchema = Joi.object({
+    //     account: Joi.object().required(),
+    //     table: Joi.string().required(),
+    //     time: Joi.string().regex(/^\d{2}:\d{2}$/).custom(now),
+    // })
+    // try {
+    //     await bookSchema.validateAsync(req.body, { abortEarly: false })
+    // } catch (err) {
+    //     return res.status(400).send(err)
+    // }
     const username = req.body.account.username
     const table = req.body.table
     const time = req.body.time
