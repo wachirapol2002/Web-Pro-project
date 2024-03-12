@@ -23,7 +23,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'noneq-01',
-    acl: 'public-read', // Set the access control level
+    acl: 'private', // Set the access control level
     key: function (req, file, cb) {
       cb(null, Date.now().toString() + '-' + file.fieldname);; // Set the file name
     },
